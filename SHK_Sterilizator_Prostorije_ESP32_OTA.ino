@@ -1,15 +1,22 @@
 #include <Wire.h>
+
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 20, 4);
+
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <Update.h>
+
 #include "PMS.h"
+
+#include <mySD.h>
 
 PMS pms(Serial);
 PMS::DATA data;
+
+File root;
 
 const char* host = "esp32";
 const char* ssid = "Zmaj i Ala";
@@ -104,6 +111,8 @@ void setup(void) {
   Serial.begin(9600);
   OTA();
   pocetnaPoruka();
+  inicijalizacijaIPisanje();
+  procitajFajl();
 }
 
 void loop(void) {
