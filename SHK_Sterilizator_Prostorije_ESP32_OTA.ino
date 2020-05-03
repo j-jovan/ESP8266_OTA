@@ -6,22 +6,16 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <Update.h>
+#include "PMS.h"
+
+PMS pms(Serial);
+PMS::DATA data;
 
 const char* host = "esp32";
 const char* ssid = "Zmaj i Ala";
 const char* password = "88888888";
 
-//variabls to blink without delay:
-const int led = 2;
-unsigned long previousMillis = 0;        // will store last time LED was updated
-const long interval = 1000;           // interval at which to blink (milliseconds)
-int ledState = LOW;             // ledState used to set the LED
-
 WebServer server(80);
-
-/*
-   Login page
-*/
 
 const char* loginIndex =
   "<form name='loginForm'>"
@@ -64,9 +58,7 @@ const char* loginIndex =
   "}"
   "</script>";
 
-/*
-   Server Index Page
-*/
+//  Server Index Page
 
 const char* serverIndex =
   "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>"
@@ -105,20 +97,18 @@ const char* serverIndex =
   "});"
   "</script>";
 
-/*
-   setup function
-*/
 void setup(void) {
+  //https://9gag.com/gag/a9nbgyW
 
   Serial.begin(115200);
-
+  Serial.begin(9600);
   OTA();
-  LCD();
+  pocetnaPoruka();
 }
 
 void loop(void) {
   server.handleClient();
   delay(1);
-
-
+  pms7003();
+  pmsSenzorDisplej();
 }
