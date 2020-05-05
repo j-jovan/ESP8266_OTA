@@ -1,18 +1,24 @@
 void inicijalizacijaIPisanje() {
   Serial.print("Initializing SD card...");
   /* initialize SD library with Soft SPI pins, if using Hard SPI replace with this SD.begin()*/
-  if (!SD.begin(26, 14, 13, 27)) {
-    Serial.println("initialization failed!");
+  
+  byte CS = 14; 
+  byte mosi = 27;
+  byte miso = 25;
+  byte sck = 26;
+  
+  if (!SD.begin(CS, mosi, miso, sck)) { 
+    Serial.println("Inicijalizacija neuspesna");
     return;
   }
-  Serial.println("initialization done.");
+  Serial.println("Inicijalizacija uspesna");
   /* Begin at the root "/" */
   root = SD.open("/");
   if (root) {
     printDirectory(root, 0);
     root.close();
   } else {
-    Serial.println("error opening test.txt");
+    Serial.println("Greska prilikom otvaranja fajla");
   }
   /* open "test.txt" for writing */
   root = SD.open("test1.txt", FILE_WRITE);
@@ -26,13 +32,13 @@ void inicijalizacijaIPisanje() {
     root.close();
   } else {
     /* if the file open error, print an error */
-    Serial.println("error opening test.txt");
+    Serial.println("Greska prilikom probe upisivanja");
   }
   delay(1000);
 }
 
 void procitajFajl() {
-  root = SD.open("test.txt");
+  root = SD.open("test1.txt");
   if (root) {
     /* read from the file until there's nothing else in it */
     while (root.available()) {

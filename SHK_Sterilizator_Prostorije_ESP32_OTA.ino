@@ -1,20 +1,20 @@
 #include <Wire.h>
-
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 20, 4);
-
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <Update.h>
-
 #include "PMS.h"
-
 #include <mySD.h>
 
-PMS pms(Serial);
+HardwareSerial SerialPMS(1);
+PMS pms(SerialPMS);
 PMS::DATA data;
+
+#define RXD2 34
+#define TXD2 35
 
 File root;
 
@@ -106,9 +106,12 @@ const char* serverIndex =
 
 void setup(void) {
   //https://9gag.com/gag/a9nbgyW
-
+  Wire.begin(33, 32);
   Serial.begin(115200);
-  Serial.begin(9600);
+  
+  SerialPMS.begin(9600, SERIAL_8N1, RXD2, TXD2);
+  pms.passiveMode();
+  
   OTA();
   pocetnaPoruka();
   inicijalizacijaIPisanje();
