@@ -6,4 +6,4 @@ PMS7003
 SD Card Reader
 Display 20x4
 Wiring
-![](images/Wiring_PNG.png)
+![](images/Wiring2_PNG.png)
