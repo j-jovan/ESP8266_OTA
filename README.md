@@ -11,4 +11,4 @@ Servo Motor
 2x Senzori Pritiska  
 3x 12v Releji (Svetla, motor i rezervni)  
 Wiring  
-![](images/Wiring2_PNG.png)
+![](images/Wiring_PNG.png)
