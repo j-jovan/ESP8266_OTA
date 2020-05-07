@@ -28,7 +28,7 @@ void pocetnaPoruka() {
   }
 }
 
-void pmsSenzorDisplej(PMS::DATA data) {
+void pmsSenzorDisplej(PMS::DATA& data) {
   lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
   lcd.backlight();
   lcd.setCursor (0, 0);

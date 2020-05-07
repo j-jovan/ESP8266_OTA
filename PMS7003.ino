@@ -10,9 +10,8 @@ void pms7003Setup()
   pms.passiveMode();
 }
 
-PMS::DATA pms7003ReadData()
+void pms7003ReadData(PMS::DATA& data)
 {
-  PMS::DATA data;
   pms.wakeUp();
   delay(3000);
   pms.requestRead();
@@ -33,6 +32,4 @@ PMS::DATA pms7003ReadData()
   }
   pms.sleep();
   delay(6000);
-
-  return data;
 }

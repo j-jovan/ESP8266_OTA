@@ -19,6 +19,6 @@ void loop(void) {
   PMS::DATA data;
   OTAHandleClient();
   delay(1);
-  data = pms7003ReadData();
+  pms7003ReadData(data);
   pmsSenzorDisplej(data);
 }
