@@ -1,13 +1,15 @@
+#define SD_CS 14
+#define SD_MOSI 27
+#define SD_MISO 25
+#define SD_SCK 26
+
+File root;
+
 void inicijalizacijaIPisanje() {
   Serial.print("Initializing SD card...");
   /* initialize SD library with Soft SPI pins, if using Hard SPI replace with this SD.begin()*/
-  
-  byte CS = 14; 
-  byte mosi = 27;
-  byte miso = 25;
-  byte sck = 26;
-  
-  if (!SD.begin(CS, mosi, miso, sck)) { 
+
+  if (!SD.begin(SD_CS, SD_MOSI, SD_MISO, SD_SCK)) { 
     Serial.println("Inicijalizacija neuspesna");
     return;
   }
@@ -53,7 +55,7 @@ void procitajFajl() {
   Serial.println("done!");
 }
 
-  void printDirectory(File dir, int numTabs) {
+void printDirectory(File dir, int numTabs) {
 
   while (true) {
     File entry =  dir.openNextFile();
