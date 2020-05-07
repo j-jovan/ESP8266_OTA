@@ -1,3 +1,15 @@
+#include <LiquidCrystal_I2C.h>
+
+#define LCD_SDA 32
+#define LCD_SCL 33
+
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+void LCDSetup()
+{
+    Wire.begin(LCD_SCL, LCD_SDA);
+}
+
 void pocetnaPoruka() {
   lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
   lcd.backlight();
@@ -16,7 +28,7 @@ void pocetnaPoruka() {
   }
 }
 
-void pmsSenzorDisplej() {
+void pmsSenzorDisplej(PMS::DATA& data) {
   lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
   lcd.backlight();
   lcd.setCursor (0, 0);
