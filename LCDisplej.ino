@@ -12,7 +12,7 @@ void pocetnaPoruka() {
   delay(1000);
   for (int i = 0; i <= 9; i++) {
     lcd.print(".");
-    delay(100);
+    delay(1);
   }
 }
 

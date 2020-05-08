@@ -13,8 +13,19 @@ HardwareSerial SerialPMS(1);
 PMS pms(SerialPMS);
 PMS::DATA data;
 
+// PMS7003 pinovi
 #define RXD2 34
 #define TXD2 35
+
+// Vreme
+unsigned long timeNow = 0;
+unsigned long timeLast = 0;
+
+int startingHour = 0;
+
+int seconds = 0;
+int minutes = 0;
+//
 
 File root;
 
@@ -108,19 +119,61 @@ void setup(void) {
   //https://9gag.com/gag/a9nbgyW
   Wire.begin(33, 32);
   Serial.begin(115200);
-  
+
+
   SerialPMS.begin(9600, SERIAL_8N1, RXD2, TXD2);
   pms.passiveMode();
-  
+  initKarticu();
+
   OTA();
-  pocetnaPoruka();
-  inicijalizacijaIPisanje();
-  procitajFajl();
+  //pocetnaPoruka();
+
+  //procitajFajl();
 }
 
 void loop(void) {
   server.handleClient();
   delay(1);
-  pms7003();
-  pmsSenzorDisplej();
+
+  timeNow = millis() / 1000;
+  seconds = timeNow - timeLast;
+
+  if (seconds == 60) {
+    timeLast = timeNow;
+    minutes = minutes + 1;
+
+  }
+
+  Serial.print("Vreme je: ");
+  Serial.print(minutes);
+  Serial.print(" minuta i ");
+  Serial.print(seconds);
+  Serial.println(" sekundi");
+
+  if (seconds == 0) {
+    pms.wakeUp();
+    Serial.println("Budjenje");
+  }
+  if (seconds == 30) {
+    pms.requestRead();
+    //Serial.println("Zahtevaj citanje");
+    if (pms.readUntil(data))  {
+      Serial.print("PM 1.0 (ug/m3): ");
+      Serial.println(data.PM_AE_UG_1_0);
+      Serial.print("PM 2.5 (ug/m3): ");
+      Serial.println(data.PM_AE_UG_2_5);
+      Serial.print("PM 10.0 (ug/m3): ");
+      Serial.println(data.PM_AE_UG_10_0);
+      pmsSenzorDisplej();
+    }
+    else
+      Serial.println("No data.");
+  }
+  pms.sleep();
+  if (seconds == 60) {
+    upisiNaKarticu(minutes);
+  }
+  delay(500);
+
+
 }

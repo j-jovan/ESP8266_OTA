@@ -1,5 +1,5 @@
-#define senzorPritiska1 34 //30PSI
-#define senzorPritiska2 35 //500PSI
+#define senzorPritiska1 13  //30PSI
+#define senzorPritiska2 12  //500PSI
 
 //Senzori su razlicitih kapaciteta i daju razlicite rezultate
 //Jedan senzor varira od 304 - 480, dok drugi varira od 436 do 656 na skali do 4000
