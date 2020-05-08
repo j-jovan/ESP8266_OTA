@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 20, 4);
@@ -177,3 +178,29 @@ void loop(void) {
 
 
 }
+=======
+#include <Wire.h>
+#include "PMS.h"
+#include <mySD.h>
+
+void setup(void) {
+  //https://9gag.com/gag/a9nbgyW
+
+  Serial.begin(115200);
+  LCDSetup();
+  pms7003Setup();
+  OTASetup();
+
+  pocetnaPoruka();
+  inicijalizacijaIPisanje();
+  procitajFajl();
+}
+
+void loop(void) {
+  PMS::DATA data;
+  OTAHandleClient();
+  delay(1);
+  pms7003ReadData(data);
+  pmsSenzorDisplej(data);
+}
+>>>>>>> 0d615caecf7a0b03f917186cdef9e8a53c229823
