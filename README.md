@@ -10,5 +10,10 @@ Display 20x4 with I2C Adapter
 Servo Motor  
 2x Senzori Pritiska  
 3x 12v Releji (Svetla, motor i rezervni)  
+
+Dodatne biblioteke:
+https://github.com/nhatuan84/esp32-micro-sdcard
+https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+
 Wiring  
 ![](images/Wiring_PNG.png)
