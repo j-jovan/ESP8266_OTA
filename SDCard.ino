@@ -36,7 +36,7 @@ void upisiNaKarticu(int i) {
       then write string "Hello world!" to it
     */
     if (root) {
-      root.println("0");
+      root.print("0");
       root.flush();
       Serial.println("Uspesno upisivanje");
       root.close();
@@ -91,5 +91,19 @@ void printDirectory(File dir, int numTabs) {
       Serial.println(entry.size());
     }
     entry.close();
+  }
+}
+
+int radnoVreme() {
+  root = SD.open("test1.txt");
+  if (root) {
+    /* read from the file until there's nothing else in it */
+    if (root.available()) {
+      /* read the file and print to Terminal */
+      return root.size();
+    }
+    root.close();
+  } else {
+    Serial.println("Timer ne radi");
   }
 }

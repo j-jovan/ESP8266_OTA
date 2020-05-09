@@ -8,9 +8,10 @@ void setup(void) {
   LCDSetup();
   pms7003Setup();
   OTASetup();
-  pocetnaPoruka();
+  pocetakLCD();
   initKarticu();
   //procitajFajl();
+
 }
 
 void loop(void) {
@@ -19,7 +20,7 @@ void loop(void) {
   OTAHandleClient();
   delay(1);
   pms7003ReadData(data);
-  pmsSenzorDisplej(data, vreme);
+  pmsLCD(data, vreme);
   upisiNaKarticu(vreme);
   delay(500);
 }

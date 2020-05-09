@@ -10,7 +10,7 @@ void LCDSetup()
   Wire.begin(LCD_SCL, LCD_SDA);
 }
 
-void pocetnaPoruka() {
+void pocetakLCD() {
   lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
   lcd.backlight();
   lcd.setCursor (0, 0);
@@ -20,16 +20,16 @@ void pocetnaPoruka() {
   lcd.setCursor (5, 2);
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
-  lcd.print("Pokretanje ");
-  
+  lcd.print("Pokretanje");
+
   for (int i = 0; i <= 9; i++) {
     lcd.print(".");
     delay(100);
   }
 }
 
-void pmsSenzorDisplej(PMS::DATA& data, int timer) {
-  if (timer == 30) {
+void pmsLCD(PMS::DATA& data, int timer) {
+  if (timer == 5) {
     lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
     lcd.backlight();
     lcd.setCursor (0, 0);
@@ -39,6 +39,7 @@ void pmsSenzorDisplej(PMS::DATA& data, int timer) {
     lcd.setCursor (0, 2);
     lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0) + " mg/m3");
     lcd.setCursor (0, 3);
-    lcd.print("Snaga motora ?%");
+    lcd.print("Radno vreme: ");
+    lcd.print(radnoVreme());
   }
 }
