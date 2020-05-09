@@ -17,7 +17,7 @@ void initKarticu() {
   /* Begin at the root "/" */
   root = SD.open("/");
   if (root) {
-    //printDirectory(root, 0);
+    printDirectory(root, 0);
     root.close();
   } else {
     Serial.println("Greska prilikom otvaranja fajla");
@@ -27,8 +27,10 @@ void initKarticu() {
   delay(1000);
 }
 
-void upisiNaKarticu(int broj) {
-  if (broj == 60) {
+void upisiNaKarticu(int i) {
+  if (i == 60) {
+
+
     root = SD.open("test1.txt", FILE_WRITE);
     /* if open succesfully -> root != NULL
       then write string "Hello world!" to it
@@ -36,13 +38,18 @@ void upisiNaKarticu(int broj) {
     if (root) {
       root.println("0");
       root.flush();
-      /* close the file */
+      Serial.println("Uspesno upisivanje");
       root.close();
-    } else {
+    }
+
+
+    else {
       /* if the file open error, print an error */
       Serial.println("Greska prilikom probe upisivanja");
     }
   }
+
+
 }
 
 void procitajFajl() {
@@ -60,6 +67,7 @@ void procitajFajl() {
 
   Serial.println("done!");
 }
+
 
 void printDirectory(File dir, int numTabs) {
 

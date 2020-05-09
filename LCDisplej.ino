@@ -20,16 +20,16 @@ void pocetnaPoruka() {
   lcd.setCursor (5, 2);
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
-  lcd.print("Pokretanje");
-  delay(1000);
+  lcd.print("Pokretanje ");
+  
   for (int i = 0; i <= 9; i++) {
     lcd.print(".");
     delay(100);
   }
 }
 
-void pmsSenzorDisplej(PMS::DATA& data, int broj) {
-  if (broj == 30) {
+void pmsSenzorDisplej(PMS::DATA& data, int timer) {
+  if (timer == 30) {
     lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
     lcd.backlight();
     lcd.setCursor (0, 0);
