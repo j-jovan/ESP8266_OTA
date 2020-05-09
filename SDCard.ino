@@ -17,7 +17,7 @@ void initKarticu() {
   /* Begin at the root "/" */
   root = SD.open("/");
   if (root) {
-    printDirectory(root, 0);
+    //printDirectory(root, 0);
     root.close();
   } else {
     Serial.println("Greska prilikom otvaranja fajla");
@@ -61,29 +61,27 @@ void procitajFajl() {
   Serial.println("done!");
 }
 
-// Ne znam sta je ovo, niti razumem kako se koristi
-//
-//void printDirectory(File dir, int numTabs) {
-//
-//  while (true) {
-//    File entry =  dir.openNextFile();
-//    if (! entry) {
-//      break;
-//    }
-//    for (uint8_t i = 0; i < numTabs; i++) {
-//      Serial.print('\t');   // we'll have a nice indentation
-//    }
-//    // Print the name
-//    Serial.print(entry.name());
-//    /* Recurse for directories, otherwise print the file size */
-//    if (entry.isDirectory()) {
-//      Serial.println("/");
-//      printDirectory(entry, numTabs + 1);
-//    } else {
-//      /* files have sizes, directories do not */
-//      Serial.print("\t\t");
-//      Serial.println(entry.size());
-//    }
-//    entry.close();
-//  }
-//}
+void printDirectory(File dir, int numTabs) {
+
+  while (true) {
+    File entry =  dir.openNextFile();
+    if (! entry) {
+      break;
+    }
+    for (uint8_t i = 0; i < numTabs; i++) {
+      Serial.print('\t');   // we'll have a nice indentation
+    }
+    // Print the name
+    Serial.print(entry.name());
+    /* Recurse for directories, otherwise print the file size */
+    if (entry.isDirectory()) {
+      Serial.println("/");
+      printDirectory(entry, numTabs + 1);
+    } else {
+      /* files have sizes, directories do not */
+      Serial.print("\t\t");
+      Serial.println(entry.size());
+    }
+    entry.close();
+  }
+}

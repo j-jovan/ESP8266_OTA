@@ -7,7 +7,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 void LCDSetup()
 {
-    Wire.begin(LCD_SCL, LCD_SDA);
+  Wire.begin(LCD_SCL, LCD_SDA);
 }
 
 void pocetnaPoruka() {
@@ -28,15 +28,17 @@ void pocetnaPoruka() {
   }
 }
 
-void pmsSenzorDisplej(PMS::DATA& data) {
-  lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
-  lcd.backlight();
-  lcd.setCursor (0, 0);
-  lcd.print("Konc pm1:   " + String(data.PM_AE_UG_1_0)+" mg/m3");
-  lcd.setCursor (0, 1);
-  lcd.print("Konc pm2.5: " + String(data.PM_AE_UG_2_5)+" mg/m3");
-  lcd.setCursor (0, 2);
-  lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0)+" mg/m3");
-  lcd.setCursor (0, 3);
-  lcd.print("Snaga motora ?%");
+void pmsSenzorDisplej(PMS::DATA& data, int broj) {
+  if (broj == 30) {
+    lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
+    lcd.backlight();
+    lcd.setCursor (0, 0);
+    lcd.print("Konc pm1:   " + String(data.PM_AE_UG_1_0) + " mg/m3");
+    lcd.setCursor (0, 1);
+    lcd.print("Konc pm2.5: " + String(data.PM_AE_UG_2_5) + " mg/m3");
+    lcd.setCursor (0, 2);
+    lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0) + " mg/m3");
+    lcd.setCursor (0, 3);
+    lcd.print("Snaga motora ?%");
+  }
 }
