@@ -6,21 +6,22 @@ void setup(void) {
   // https://9gag.com/gag/a9nbgyW
   Serial.begin(115200);
   LCDSetup();
-  pms7003Setup();
+  PMS7003Setup();
   OTASetup();
-  pocetakLCD();
-  initKarticu();
-  //procitajFajl();
+  LCD_Setup();
+  initSDCard();
 
 }
 
 void loop(void) {
   int vreme = timer();
+  //Serial.println(senzorPritiska1Met());
+  //Serial.println(senzorPritiska2Met());
   PMS::DATA data;
   OTAHandleClient();
   delay(1);
-  pms7003ReadData(data);
-  pmsLCD(data, vreme);
+  PMS7003ReadData(data);
+  LCDPMS7003(data, vreme);
   upisiNaKarticu(vreme);
   delay(500);
 }

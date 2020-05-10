@@ -1,15 +1,15 @@
-#define RXD2 34
-#define TXD2 35
+#define RXD2 25
+#define TXD2 33
 
 HardwareSerial SerialPMS(1);
 PMS pms(SerialPMS);
 
-void pms7003Setup() {
+void PMS7003Setup() {
   SerialPMS.begin(9600, SERIAL_8N1, RXD2, TXD2);
   pms.passiveMode();
 }
 
-void pms7003ReadData(PMS::DATA& data) {
+void PMS7003ReadData(PMS::DATA& data) {
   pms.wakeUp();
 
   if (timer() == 30) {

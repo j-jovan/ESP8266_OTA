@@ -1,16 +1,18 @@
 #include <LiquidCrystal_I2C.h>
 
-#define LCD_SDA 33
-#define LCD_SCL 32
+#define LCD_SCL 4
+#define LCD_SDA 15
+
+int upozorenje = 170;
+int servis = 220;
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
-void LCDSetup()
-{
-  Wire.begin(LCD_SCL, LCD_SDA);
+void LCDSetup() {
+  Wire.begin(LCD_SDA, LCD_SCL );
 }
 
-void pocetakLCD() {
+void LCD_Setup() {
   lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
   lcd.backlight();
   lcd.setCursor (0, 0);
@@ -21,14 +23,15 @@ void pocetakLCD() {
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
   lcd.print("Pokretanje");
-
   for (int i = 0; i <= 9; i++) {
     lcd.print(".");
     delay(100);
   }
 }
 
-void pmsLCD(PMS::DATA& data, int timer) {
+// Standardno ispisivanje podataka
+void LCDPMS7003(PMS::DATA& data, int timer) {
+
   if (timer == 5) {
     lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
     lcd.backlight();
@@ -43,3 +46,6 @@ void pmsLCD(PMS::DATA& data, int timer) {
     lcd.print(radnoVreme());
   }
 }
+
+
+// Obavestavanje kad se priblizava servis uredjaja
