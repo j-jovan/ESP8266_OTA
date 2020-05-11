@@ -1,7 +1,12 @@
-void lampeUV(){
-  
+#define relejUV 19
+
+
+void ukljuciUV() {
+  digitalWrite(relejUV, HIGH);
+  delay(10);
 }
 
-void motor(){
-  
+void iskljuciUV() {
+  digitalWrite(relejUV, LOW);
+  delay(10);
 }

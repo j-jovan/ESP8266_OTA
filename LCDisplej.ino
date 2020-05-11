@@ -3,17 +3,15 @@
 #define LCD_SCL 4
 #define LCD_SDA 15
 
-int upozorenje = 170;
-int servis = 220;
-
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
+//Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
 void LCDSetup() {
   Wire.begin(LCD_SDA, LCD_SCL );
 }
 
 void LCD_Setup() {
-  lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
+  lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
   lcd.print("Srbija Hakuje Koronu");
@@ -33,7 +31,7 @@ void LCD_Setup() {
 void LCDPMS7003(PMS::DATA& data, int timer) {
 
   if (timer == 5) {
-    lcd.begin(); //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
+    lcd.begin();
     lcd.backlight();
     lcd.setCursor (0, 0);
     lcd.print("Konc pm1:   " + String(data.PM_AE_UG_1_0) + " mg/m3");
@@ -46,6 +44,5 @@ void LCDPMS7003(PMS::DATA& data, int timer) {
     lcd.print(radnoVreme());
   }
 }
-
 
 // Obavestavanje kad se priblizava servis uredjaja

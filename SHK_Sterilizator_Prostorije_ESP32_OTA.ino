@@ -10,13 +10,14 @@ void setup(void) {
   OTASetup();
   LCD_Setup();
   initSDCard();
+  initServo();
 
 }
 
 void loop(void) {
   int vreme = timer();
-  //Serial.println(senzorPritiska1Met());
-  //Serial.println(senzorPritiska2Met());
+  //Serial.println(senzorPritiska1());
+  //Serial.println(senzorPritiska2());
   PMS::DATA data;
   OTAHandleClient();
   delay(1);
@@ -24,4 +25,6 @@ void loop(void) {
   LCDPMS7003(data, vreme);
   upisiNaKarticu(vreme);
   delay(500);
+  servoControl();
+
 }

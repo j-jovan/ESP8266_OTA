@@ -1,5 +1,5 @@
-#define RXD2 25
-#define TXD2 33
+#define RXD2 34
+#define TXD2 39
 
 HardwareSerial SerialPMS(1);
 PMS pms(SerialPMS);
@@ -22,10 +22,11 @@ void PMS7003ReadData(PMS::DATA& data) {
       Serial.println(data.PM_AE_UG_2_5);
       Serial.print("PM 10.0 (ug/m3): ");
       Serial.println(data.PM_AE_UG_10_0);
+      delay(20);
     }
 
     else  {
-      Serial.println("PMS 7003 No Data");
+      Serial.println("PMS ne vraca podatke");
     }
     pms.sleep();
   }

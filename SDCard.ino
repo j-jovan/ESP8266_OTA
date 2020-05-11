@@ -3,7 +3,6 @@
 #define SD_MOSI 14
 #define SD_CS 12
 
-
 File root;
 
 void initSDCard() {
@@ -33,7 +32,6 @@ void upisiNaKarticu(int i) {
       root.close();
     }
     else {
-
       Serial.println("Greska prilikom upisivanja");
     }
   }
