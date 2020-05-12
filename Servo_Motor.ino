@@ -7,23 +7,20 @@ void initServo() {
   servo2.attach(servoPin);
 }
 
-void servoControl2() {
-  for (int pos = 0; pos <= 180; pos += 1) {
+void servoControl(int stepeni) {
+  for (int pos = 0; pos <= stepeni; pos += 1) {
     servo2.write(pos);
     Serial.println(pos);
-    delay(20);
   }
-  //  for (int pos = 180; pos >= 0; pos -= 1) {
-  //    servo2.write(pos);
-  //    Serial.println(pos);
-  //    delay(20);
-  //  }
 }
+void kontrolaMotora() {
+  if (600 < senzorPritiska1() < 700)
+    servo2.write(90);
+  if (700 < senzorPritiska1() < 800)
+    servo2.write(100);
+  if (800 < senzorPritiska1() < 900)
+    servo2.write(110);
+  if (900 < senzorPritiska1() < 1000)
+    servo2.write(120);
 
-void servoControl() {
-  for (int pos = 0; pos <= 180; pos += 1) {
-    servo2.write(pos);
-    Serial.println(pos);
-  }
-  delay(20);
 }
