@@ -15,8 +15,6 @@ void setup(void) {
 }
 
 void loop(void) {
-  int senz1avg = senz1 / counter;
-  int senz2avg = senz2 / counter;
   int vreme = timer();
   Serial.println(senzorPritiska1());
   Serial.println(senzorPritiska2());
@@ -26,6 +24,6 @@ void loop(void) {
   PMS7003ReadData(data);
   LCDPMS7003(data, vreme);
   upisiNaKarticu(vreme);
-  //kontrolaMotora();
+  kontrolaMotora();
   delay(500);
 }

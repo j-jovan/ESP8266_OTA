@@ -1,26 +1,22 @@
 #include <Servo.h>
 
-Servo servo2;
+Servo servoMotor;
 const int servoPin = 23;
 
 void initServo() {
-  servo2.attach(servoPin);
+  servoMotor.attach(servoPin);
 }
 
 void servoControl(int stepeni) {
   for (int pos = 0; pos <= stepeni; pos += 1) {
-    servo2.write(pos);
+    servoMotor.write(pos);
     Serial.println(pos);
   }
 }
-void kontrolaMotora() {
-  if (600 < senzorPritiska1() < 700)
-    servo2.write(90);
-  if (700 < senzorPritiska1() < 800)
-    servo2.write(100);
-  if (800 < senzorPritiska1() < 900)
-    servo2.write(110);
-  if (900 < senzorPritiska1() < 1000)
-    servo2.write(120);
 
+void kontrolaMotora() {
+  float motor = map(senzorPritiska1(), 1, 5, 0, 180);
+  servoMotor.write(motor);
+  Serial.print("Servo motor: ");
+  Serial.println(motor);
 }
