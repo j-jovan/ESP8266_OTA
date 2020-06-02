@@ -2,16 +2,19 @@
 #include "PMS.h"
 #include <mySD.h>
 
+int relejUV = 19;
+
 void setup(void) {
   // https://9gag.com/gag/a9nbgyW
   Serial.begin(115200);
+  pinMode(relejUV, OUTPUT);
   LCDSetup();
   PMS7003Setup();
   OTASetup();
   LCD_Setup();
   initSDCard();
-  initServo();
   ukljuciUV();
+  motorPWMInit();
 }
 
 void loop(void) {
@@ -24,6 +27,6 @@ void loop(void) {
   PMS7003ReadData(data);
   LCDPMS7003(data, vreme);
   upisiNaKarticu(vreme);
-  kontrolaMotora();
+  motorPWMLoop();
   delay(500);
 }

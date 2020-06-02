@@ -1,6 +1,3 @@
-#define relejUV 19
-
-
 void ukljuciUV() {
   digitalWrite(relejUV, HIGH);
   delay(10);
