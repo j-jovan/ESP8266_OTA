@@ -1,4 +1,4 @@
-void timer(int& seconds, int& minutes) {
+void timer(unsigned int& seconds, unsigned int& minutes) {
   unsigned long timeNow = 0;
 
   timeNow = millis() / 1000;

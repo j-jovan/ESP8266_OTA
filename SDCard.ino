@@ -22,18 +22,16 @@ void initSDCard() {
   //delay(1000);
 }
 
-void upisiNaKarticu(int i) {
-  if (i == 60) {
-    root = SD.open("vreme.txt", FILE_WRITE);
-    if (root) {
-      root.print("0");
-      root.flush();
-      Serial.println("Uspesno upisivanje");
-      root.close();
-    }
-    else {
-      Serial.println("Greska prilikom upisivanja");
-    }
+void upisiNaKarticu() {
+  root = SD.open("vreme.txt", FILE_WRITE);
+  if (root) {
+    root.print("0");
+    root.flush();
+    Serial.println("Uspesno upisivanje");
+    root.close();
+  }
+  else {
+    Serial.println("Greska prilikom upisivanja");
   }
 }
 
