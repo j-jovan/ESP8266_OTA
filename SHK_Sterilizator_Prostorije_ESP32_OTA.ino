@@ -18,15 +18,27 @@ void setup(void) {
 }
 
 void loop(void) {
-  int vreme = timer();
+  PMS::DATA data;
+  int seconds;
+  int minutes;
+  int minutesLast = 0;
+
+  timer(seconds, minutes);
+
+  if (seconds%30 == 0)
+    PMS7003ReadData(data);
+
+  if (seconds%5 == 0)
+    LCDPMS7003(data);
+
+  if (minutes != minutesLast) {
+    upisiNaKarticu();
+    minutesLast = minutes;
+  }
+
   Serial.println(senzorPritiska1());
   Serial.println(senzorPritiska2());
-  PMS::DATA data;
   OTAHandleClient();
-  delay(1);
-  PMS7003ReadData(data);
-  LCDPMS7003(data, vreme);
-  upisiNaKarticu(vreme);
   motorPWMLoop();
   delay(500);
 }

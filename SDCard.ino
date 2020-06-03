@@ -19,7 +19,7 @@ void initSDCard() {
   } else {
     Serial.println("Greska prilikom otvaranja fajla");
   }
-  delay(1000);
+  //delay(1000);
 }
 
 void upisiNaKarticu(int i) {
