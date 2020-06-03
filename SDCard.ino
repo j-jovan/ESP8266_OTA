@@ -1,6 +1,6 @@
 #define SD_MISO 26
-#define SD_SCK 27
-#define SD_MOSI 14
+#define SD_SCK 14
+#define SD_MOSI 27
 #define SD_CS 12
 
 File root;
