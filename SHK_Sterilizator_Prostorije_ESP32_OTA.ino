@@ -49,6 +49,6 @@ void loop(void) {
   Serial.println(senzorPritiska1());
   Serial.println(senzorPritiska2());
   OTAHandleClient();
-  motorPWMLoop();
+  motorDACLoop();
   delay(500);
 }
