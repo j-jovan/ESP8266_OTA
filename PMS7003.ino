@@ -9,25 +9,28 @@ void PMS7003Setup() {
   pms.passiveMode();
 }
 
-void PMS7003ReadData(PMS::DATA& data) {
+void PMS7003WakeUp() {
   pms.wakeUp();
+  Serial.println("PMS Wake Up");
+}
 
-  if (timer() == 30) {
-    pms.requestRead();
-    if (pms.readUntil(data))
-    {
-      Serial.print("PM 1.0 (ug/m3): ");
-      Serial.println(data.PM_AE_UG_1_0);
-      Serial.print("PM 2.5 (ug/m3): ");
-      Serial.println(data.PM_AE_UG_2_5);
-      Serial.print("PM 10.0 (ug/m3): ");
-      Serial.println(data.PM_AE_UG_10_0);
-      delay(20);
-    }
+void PMS7003Sleep() {
+  pms.sleep();
+  Serial.println("PMS Sleep");
+}
 
-    else  {
-      Serial.println("PMS ne vraca podatke");
-    }
-    pms.sleep();
+void PMS7003ReadData(PMS::DATA& data) {
+  pms.requestRead();
+  if (pms.readUntil(data))
+  {
+    Serial.print("PM 1.0 (ug/m3): ");
+    Serial.println(data.PM_AE_UG_1_0);
+    Serial.print("PM 2.5 (ug/m3): ");
+    Serial.println(data.PM_AE_UG_2_5);
+    Serial.print("PM 10.0 (ug/m3): ");
+    Serial.println(data.PM_AE_UG_10_0);
+    //delay(20);
+  } else {
+    Serial.println("PMS ne vraca podatke");
   }
 }

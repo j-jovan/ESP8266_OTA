@@ -2,6 +2,8 @@
 #include "PMS.h"
 #include <mySD.h>
 
+#define PMS_READ_INTERVAL 5
+
 int relejUV = 19;
 
 void setup(void) {
@@ -18,15 +20,35 @@ void setup(void) {
 }
 
 void loop(void) {
-  int vreme = timer();
+  PMS::DATA data;
+  unsigned int seconds;
+  unsigned int minutes;
+  static unsigned int SDMinutesWrite = 1;
+  static unsigned int PMSMinutesOn = 0;
+  static unsigned int PMSMinutesRead = 1;
+  
+  timer(seconds, minutes);
+
+  if (minutes == PMSMinutesOn) {
+    PMS7003WakeUp();
+    PMSMinutesOn += PMS_READ_INTERVAL;
+  }
+  if (minutes == PMSMinutesRead) {
+    PMS7003ReadData(data);
+    PMS7003Sleep();
+    LCDPMS7003(data);
+    PMSMinutesRead += PMS_READ_INTERVAL;
+  }
+
+  if (minutes == SDMinutesWrite) {
+    upisiNaKarticu();
+    LCDPMS7003(data);
+    SDMinutesWrite++;
+  }
+
   Serial.println(senzorPritiska1());
   Serial.println(senzorPritiska2());
-  PMS::DATA data;
   OTAHandleClient();
-  delay(1);
-  PMS7003ReadData(data);
-  LCDPMS7003(data, vreme);
-  upisiNaKarticu(vreme);
-  motorPWMLoop();
+  motorDACLoop();
   delay(500);
 }

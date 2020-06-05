@@ -28,21 +28,18 @@ void LCD_Setup() {
 }
 
 // Standardno ispisivanje podataka
-void LCDPMS7003(PMS::DATA& data, int timer) {
-
-  if (timer == 5) {
-    lcd.begin();
-    lcd.backlight();
-    lcd.setCursor (0, 0);
-    lcd.print("Konc pm1:   " + String(data.PM_AE_UG_1_0) + " mg/m3");
-    lcd.setCursor (0, 1);
-    lcd.print("Konc pm2.5: " + String(data.PM_AE_UG_2_5) + " mg/m3");
-    lcd.setCursor (0, 2);
-    lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0) + " mg/m3");
-    lcd.setCursor (0, 3);
-    lcd.print("Radno vreme: ");
-    lcd.print(radnoVreme());
-  }
+void LCDPMS7003(PMS::DATA& data) {
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor (0, 0);
+  lcd.print("Konc pm1:   " + String(data.PM_AE_UG_1_0) + " mg/m3");
+  lcd.setCursor (0, 1);
+  lcd.print("Konc pm2.5: " + String(data.PM_AE_UG_2_5) + " mg/m3");
+  lcd.setCursor (0, 2);
+  lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0) + " mg/m3");
+  lcd.setCursor (0, 3);
+  lcd.print("Radno vreme: ");
+  lcd.print(radnoVreme());
 }
 
 // Obavestavanje kad se priblizava servis uredjaja
