@@ -21,10 +21,6 @@ void LCD_Setup() {
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
   lcd.print("Pokretanje");
-  for (int i = 0; i <= 9; i++) {
-    lcd.print(".");
-    delay(100);
-  }
 }
 
 // Standardno ispisivanje podataka
@@ -40,6 +36,10 @@ void LCDPMS7003(PMS::DATA& data) {
   lcd.setCursor (0, 3);
   lcd.print("Radno vreme: ");
   lcd.print(radnoVreme());
+}
+
+void LCD_Debug(){
+  
 }
 
 // Obavestavanje kad se priblizava servis uredjaja

@@ -16,7 +16,7 @@ void setup(void) {
   LCD_Setup();
   initSDCard();
   ukljuciUV();
-  motorPWMInit();
+  motorDACLoop();
 }
 
 void loop(void) {
