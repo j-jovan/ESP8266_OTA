@@ -13,7 +13,7 @@ void setup(void) {
   LCDSetup();
   PMS7003Setup();
   OTASetup();
-  LCD_Setup();
+  LCD_Start();
   initSDCard();
   ukljuciUV();
   motorDACLoop();
@@ -26,7 +26,7 @@ void loop(void) {
   static unsigned int SDMinutesWrite = 1;
   static unsigned int PMSMinutesOn = 0;
   static unsigned int PMSMinutesRead = 1;
-  
+
   timer(seconds, minutes);
 
   if (minutes == PMSMinutesOn) {
@@ -51,4 +51,5 @@ void loop(void) {
   OTAHandleClient();
   motorDACLoop();
   delay(500);
+  //LCD_Debug("Hello");
 }

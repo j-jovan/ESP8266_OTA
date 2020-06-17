@@ -20,5 +20,5 @@ float senzorPritiska2() {
   float pressure_pascal = (3.0 * ((float)voltage - 0.47)) * 1000000.0;
   float pressure_bar = pressure_pascal / 10e5;
   float pressure_psi = pressure_bar * 14.5038;
-  return abs(pressure_bar);
+  return pressure_bar;
 }

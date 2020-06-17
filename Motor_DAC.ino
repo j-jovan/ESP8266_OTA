@@ -6,9 +6,9 @@ void motorDACLoop() {
   static int fadeAmount = FADE_STEP;
 
   dacWrite(DAC1, brightness);
-  brightness = brightness + fadeAmount;
-  if (brightness <= 0 || brightness >= 200) {
-    fadeAmount = -fadeAmount;
-  }
+    brightness = brightness + fadeAmount;
+    if (brightness <= 0 || brightness >= 200) {
+      fadeAmount = -fadeAmount;
+    }
 
 }
