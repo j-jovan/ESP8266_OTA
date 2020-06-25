@@ -17,6 +17,7 @@ void setup(void) {
   initSDCard();
   ukljuciUV();
   motorDACLoop();
+  BPM280_Setup();
 }
 
 void loop(void) {
@@ -45,11 +46,9 @@ void loop(void) {
     LCDPMS7003(data);
     SDMinutesWrite++;
   }
-
-  Serial.println(senzorPritiska1());
-  Serial.println(senzorPritiska2());
+  razlikaPritiska(10); //Proveriti broj
+  //LCD_Debug(String());
   OTAHandleClient();
-  motorDACLoop();
+  //motorDACLoop();
   delay(500);
-  //LCD_Debug("Hello");
 }

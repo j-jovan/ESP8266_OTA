@@ -35,7 +35,7 @@ void LCDPMS7003(PMS::DATA& data) {
   lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0) + " mg/m3");
   lcd.setCursor (0, 3);
   lcd.print("Radno vreme: ");
-  int brojSati = radnoVreme()/60;
+  int brojSati = radnoVreme() / 60;
   int brojMinuta = radnoVreme() - brojSati * 60;
   lcd.print(brojSati);
   lcd.print("s:");
@@ -47,7 +47,7 @@ void LCD_Debug(int i) {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-- lcd.print(i);
+  - lcd.print(i);
   lcd.setCursor (0, 1);
   lcd.print("");
   lcd.setCursor (5, 2);
@@ -60,9 +60,22 @@ void LCD_Debug(String i) {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-- lcd.print(i);
+  - lcd.print(i);
   lcd.setCursor (0, 1);
   lcd.print("");
+  lcd.setCursor (5, 2);
+  lcd.print("");
+  lcd.setCursor (0, 3);
+  lcd.print("");
+}
+
+void LCD_Debug(String i, String z) {
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor (0, 0);
+  - lcd.print(i);
+  lcd.setCursor (0, 1);
+  lcd.print(z);
   lcd.setCursor (5, 2);
   lcd.print("");
   lcd.setCursor (0, 3);
