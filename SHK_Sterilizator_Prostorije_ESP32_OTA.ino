@@ -6,6 +6,7 @@
 
 int relejUV = 19;
 
+
 void setup(void) {
   // https://9gag.com/gag/a9nbgyW
   Serial.begin(115200);
@@ -15,9 +16,8 @@ void setup(void) {
   OTASetup();
   LCD_Start();
   initSDCard();
-  ukljuciUV();
-  motorDACLoop();
-  BPM280_Setup();
+  //ukljuciUV();
+  BMP280_Setup();
 }
 
 void loop(void) {
@@ -43,12 +43,21 @@ void loop(void) {
 
   if (minutes == SDMinutesWrite) {
     upisiNaKarticu();
-    LCDPMS7003(data);
     SDMinutesWrite++;
+    PMS7003Setup();
+    LCDPMS7003(data);
+    BMP280_Setup();
   }
-  razlikaPritiska(10); //Proveriti broj
-  //LCD_Debug(String());
+  //razlikaPritiska(10); //Proveriti broj
+
+  //LCD_Debug(String(BMP1_pritisak()), String(BMP2_pritisak()));
   OTAHandleClient();
-  //motorDACLoop();
+  motorDACLoop();
+
+  srednjaVrednostBMP();
+
   delay(500);
+  Serial.println("--------------------");
+
+
 }

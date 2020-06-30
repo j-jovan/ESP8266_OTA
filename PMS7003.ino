@@ -1,5 +1,5 @@
-#define RXD2 34
-#define TXD2 39
+#define RXD2 39
+#define TXD2 34
 
 HardwareSerial SerialPMS(1);
 PMS pms(SerialPMS);

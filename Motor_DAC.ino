@@ -1,14 +1,7 @@
 #define DAC1 25
-#define FADE_STEP 1
+
+int snagaMotora[10] = {178, 179, 180, 181, 181, 183, 184, 185, 186, 187};
 
 void motorDACLoop() {
-  static int brightness = 0;
-  static int fadeAmount = FADE_STEP;
-
-  dacWrite(DAC1, 180);
-  brightness = brightness + fadeAmount;
-  if (brightness <= 0 || brightness >= 200) {
-    fadeAmount = -fadeAmount;
-  }
-
+  dacWrite(DAC1, 220);
 }

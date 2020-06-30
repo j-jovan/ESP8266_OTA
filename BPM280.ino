@@ -1,22 +1,25 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 
+//Senzor 1
 #define BMP280_1_I2C_SDA 21
 #define BMP280_1_I2C_SCL 22
 
-#define BMP280_2_I2C_SDA 18
-#define BMP280_2_I2C_SCL 5
+//Senzor 2
+#define BMP280_2_I2C_SDA 5
+#define BMP280_2_I2C_SCL 18
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
 TwoWire I2CBME1 = TwoWire(0);
-TwoWire I2CBME2 = TwoWire(0);
+TwoWire I2CBME2 = TwoWire(1);
+
 Adafruit_BME280 bme1;
 Adafruit_BME280 bme2;
 
 unsigned long delayTime;
 
-void BPM280_Setup() {
+void BMP280_Setup() {
   Serial.begin(115200);
   Serial.println(F("BME280 test"));
   I2CBME1.begin(BMP280_1_I2C_SDA, BMP280_1_I2C_SCL, 100000);
@@ -27,7 +30,7 @@ void BPM280_Setup() {
 
   status = bme1.begin(0x76, &I2CBME1);
   if (!status) {
-    Serial.println("Neuspelo povezivanje sa BMP280 senzorom broj 1, proveri kablove");
+    Serial.println("Neuspelo povezivanje sa BMP280 senzorom broj 1, proveri povezivanje");
     while (1);
   }
 
@@ -42,13 +45,13 @@ void BPM280_Setup() {
 
   Serial.println();
 }
-void BPM280_Loop() {
-  BPM1_sve_vrednosti();
-  BPM2_sve_vrednosti();
+void BMP280_Loop() {
+  BMP1_sve_vrednosti();
+  BMP2_sve_vrednosti();
   delay(delayTime);
 }
 
-void BPM1_sve_vrednosti() {
+void BMP1_sve_vrednosti() {
   Serial.print("Temperatura = ");
   Serial.print(bme1.readTemperature());
   Serial.println(" *C");
@@ -68,7 +71,7 @@ void BPM1_sve_vrednosti() {
   Serial.println();
 }
 
-void BPM2_sve_vrednosti() {
+void BMP2_sve_vrednosti() {
   Serial.print("Temperatura = ");
   Serial.print(bme2.readTemperature());
   Serial.println(" *C");
@@ -88,29 +91,42 @@ void BPM2_sve_vrednosti() {
   Serial.println("--------------------");
 }
 
-float BPM1_pritisak() {
+float BMP1_pritisak() {
   //  Serial.print("Pritisak = ");
   //  Serial.print(bme1.readPressure() / 100.0F);
   //  Serial.println(" hPa");
   return bme1.readPressure() / 100.0F;
 }
 
-float BPM2_pritisak() {
+float BMP2_pritisak() {
   //  Serial.print("Pritisak = ");
   //  Serial.print(bme2.readPressure() / 100.0F);
   //  Serial.println(" hPa");
   return bme2.readPressure() / 100.0F;
 }
 
-void ispisiPritiske() {
-  Serial.println(BPM1_pritisak());
-  Serial.println(BPM2_pritisak());
+float pritisak1 = 0;
+float pritisak2 = 0;
+int pritisakCounter = 0;
+int brojUzoraka = 10;
+
+void srednjaVrednostBMP() {
+  pritisak1 += BMP1_pritisak();
+  pritisak2 += BMP2_pritisak();
+  pritisakCounter++;
+  if (pritisakCounter == brojUzoraka) {
+    Serial.print("Srednja vrednost prvog senzora: ");
+    Serial.println(pritisak1 / brojUzoraka);
+    Serial.print("Srednja vrednost drugog senzora: ");
+    Serial.println(pritisak2 / brojUzoraka);
+    pritisakCounter = 0;
+    pritisak1 = 0;
+    pritisak2 = 0;
+  }
 }
 
-// granicaZaprljanostiFiltera je broj koji predstavlja kolika razlika pritiska treba biti u obe komore
-// da bi se smatralo da su filteri zaprljani
 void razlikaPritiska(int granicaZaprljanostiFiltera) {
-  if (abs(BPM1_pritisak() - BPM2_pritisak()) > granicaZaprljanostiFiltera) {
+  if (abs(BMP1_pritisak() - BMP2_pritisak()) > granicaZaprljanostiFiltera) {
     Serial.println("Prljav filter");
   }
 }
