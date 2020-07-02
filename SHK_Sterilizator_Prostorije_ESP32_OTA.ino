@@ -6,16 +6,15 @@
 
 int relejUV = 19;
 
-
 void setup(void) {
   // https://9gag.com/gag/a9nbgyW
   Serial.begin(115200);
   pinMode(relejUV, OUTPUT);
-  LCDSetup();
-  PMS7003Setup();
-  OTASetup();
+  LCD_Setup();
+  PMS7003_Setup();
+  OTA_Setup();
   LCD_Start();
-  initSDCard();
+  init_SDCard();
   //ukljuciUV();
   BMP280_Setup();
 }
@@ -37,25 +36,29 @@ void loop(void) {
   if (minutes == PMSMinutesRead) {
     PMS7003ReadData(data);
     PMS7003Sleep();
-    LCDPMS7003(data);
+    LCD_PMS7003(data);
     PMSMinutesRead += PMS_READ_INTERVAL;
   }
 
   if (minutes == SDMinutesWrite) {
     upisiNaKarticu();
     SDMinutesWrite++;
-    PMS7003Setup();
-    LCDPMS7003(data);
+    PMS7003_Setup();
+    LCD_PMS7003(data);
     BMP280_Setup();
   }
-  //razlikaPritiska(10); //Proveriti broj
 
-  //LCD_Debug(String(BMP1_pritisak()), String(BMP2_pritisak()));
+  // Proveri i postavi snagu motora na svakih 10 sekundi
+  if (seconds % 10 == 0) {
+    motorDacMap();
+  }
+  
+  // OTA Handler
   OTAHandleClient();
-  motorDACLoop();
 
   srednjaVrednostBMP();
 
+  Serial.println(vratiRazlikuPritiska());
   delay(500);
   Serial.println("--------------------");
 

@@ -6,7 +6,7 @@
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 //Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
-void LCDSetup() {
+void LCD_Setup() {
   Wire.begin(LCD_SDA, LCD_SCL );
 }
 
@@ -20,11 +20,10 @@ void LCD_Start() {
   lcd.setCursor (5, 2);
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
-  lcd.print("Pokretanje");
+  lcd.print("Pokretanje...");
 }
 
-// Standardno ispisivanje podataka
-void LCDPMS7003(PMS::DATA& data) {
+void LCD_PMS7003(PMS::DATA& data) {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
@@ -47,7 +46,7 @@ void LCD_Debug(int i) {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-  - lcd.print(i);
+  lcd.print(i);
   lcd.setCursor (0, 1);
   lcd.print("");
   lcd.setCursor (5, 2);
@@ -60,7 +59,7 @@ void LCD_Debug(String i) {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-  - lcd.print(i);
+  lcd.print(i);
   lcd.setCursor (0, 1);
   lcd.print("");
   lcd.setCursor (5, 2);
@@ -73,7 +72,7 @@ void LCD_Debug(String i, String z) {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-  - lcd.print(i);
+  lcd.print(i);
   lcd.setCursor (0, 1);
   lcd.print(z);
   lcd.setCursor (5, 2);
@@ -83,3 +82,18 @@ void LCD_Debug(String i, String z) {
 }
 
 // Obavestavanje kad se priblizava servis uredjaja
+//void LCD_Upozorenje(int x) {
+//  lcd.begin();
+//  lcd.backlight();
+//  lcd.setCursor (0, 0);
+//  lcd.print("Konc pm1:   " + String(data.PM_AE_UG_1_0) + " mg/m3");
+//  lcd.setCursor (0, 1);
+//  lcd.print("Konc pm2.5: " + String(data.PM_AE_UG_2_5) + " mg/m3");
+//  lcd.setCursor (0, 2);
+//  lcd.print("Konc pm10:  " + String(data.PM_AE_UG_10_0) + " mg/m3");
+//  lcd.setCursor (0, 3);
+//  int brojSati = radnoVreme() / 60;
+//  int brojMinuta = radnoVreme() - brojSati * 60;
+//  lcd.print(x - brojSati);
+//  lcd.print(" sati do servisa");
+//}

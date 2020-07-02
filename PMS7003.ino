@@ -4,7 +4,7 @@
 HardwareSerial SerialPMS(1);
 PMS pms(SerialPMS);
 
-void PMS7003Setup() {
+void PMS7003_Setup() {
   SerialPMS.begin(9600, SERIAL_8N1, RXD2, TXD2);
   pms.passiveMode();
 }

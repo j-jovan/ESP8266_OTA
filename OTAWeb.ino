@@ -6,7 +6,7 @@
 const char* ssid = "Zmaj i Ala";
 const char* password = "88888888";
 
-void OTASetup() {
+void OTA_Setup() {
 
   Serial.println("Booting");
   WiFi_Off();

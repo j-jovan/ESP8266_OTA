@@ -7,7 +7,7 @@ File root;
 static const char* filename = "vreme.txt";
 static unsigned long rVreme;
 
-void initSDCard() {
+void init_SDCard() {
   Serial.print("Inicijalizacija SD kartice...");
   if (!SD.begin(SD_CS, SD_MOSI, SD_MISO, SD_SCK)) {
     Serial.println("neuspesna");
