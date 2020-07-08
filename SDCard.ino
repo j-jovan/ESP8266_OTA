@@ -40,9 +40,9 @@ bool openPMSFile()
   int i = 0;
 
   do {
-    name = "/session_" + String(i++) + ".txt";
+    name = "PMS_" + String(i++) + ".txt";
     name.toCharArray(pmsFilename, 128);
-  } while(SD.exists(pmsFilename));
+  } while (SD.exists(pmsFilename));
 
   pmsFile = SD.open(pmsFilename, FILE_WRITE);
   if (!pmsFile) {
@@ -51,18 +51,19 @@ bool openPMSFile()
   }
 
   pmsFile.seek(0);
-  pmsFile.print("PMS1.0\t\tPMS2.5\t\tPMS10\n");
+  //pmsFile.print("PMS1.0\t\tPMS2.5\t\tPMS10\n");
   pmsFile.flush();
   pmsFile.close();
 
   return true;
 }
 
-void upisiPMSData(PMS::DATA& data) 
+void upisiPMSData(PMS::DATA& data)
 {
   File pmsFile;
-  String line = String(data.PM_AE_UG_1_0) + "\t\t" + String(data.PM_AE_UG_2_5) + "\t\t" + String(data.PM_AE_UG_10_0) + "\n";
-  
+  //String line = String(data.PM_AE_UG_1_0) + "\t\t" + String(data.PM_AE_UG_2_5) + "\t\t" + String(data.PM_AE_UG_10_0) + "\n";
+  String line = String(data.PM_AE_UG_1_0) + "," + String(data.PM_AE_UG_2_5) + "," + String(data.PM_AE_UG_10_0) + "\n";
+
   pmsFile = SD.open(pmsFilename, FILE_WRITE);
   if (!pmsFile) {
     Serial.println("Greska prilikom upisivanja u PMS file");
@@ -72,7 +73,7 @@ void upisiPMSData(PMS::DATA& data)
   pmsFile.print(line);
   pmsFile.flush();
 
-  Serial.println("Uspesno upisivanje");
+  Serial.println("Uspesno upisivanje u PMS file");
   pmsFile.close();
 }
 
@@ -82,7 +83,7 @@ void upisiNaKarticu() {
 
   fileVreme = SD.open(filename, FILE_WRITE);
   if (!fileVreme) {
-    Serial.println("Greska prilikom upisivanja");
+    Serial.println("Greska prilikom upisivanja vremena");
     return;
   }
 
@@ -90,7 +91,7 @@ void upisiNaKarticu() {
   fileVreme.print(rVreme);
   fileVreme.flush();
 
-  Serial.println("Uspesno upisivanje");
+  Serial.println("Uspesno upisivanje vremena");
   fileVreme.close();
 }
 
@@ -98,7 +99,7 @@ void procitajFajl() {
   File fileVreme;
   fileVreme = SD.open(filename);
   if (!fileVreme) {
-    Serial.println("Greska prilikom otvaranja fajla");
+    Serial.println("Greska prilikom otvaranja fajla vremena");
     return;
   }
 
