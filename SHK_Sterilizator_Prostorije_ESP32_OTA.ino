@@ -37,6 +37,7 @@ void loop(void) {
     PMS7003ReadData(data);
     PMS7003Sleep();
     LCD_PMS7003(data);
+    upisiPMSData(data);
     PMSMinutesRead += PMS_READ_INTERVAL;
   }
 
