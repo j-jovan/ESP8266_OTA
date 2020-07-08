@@ -20,7 +20,9 @@ void LCD_Start() {
   lcd.setCursor (5, 2);
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
-  lcd.print("Pokretanje...");
+  lcd.print("Pokretanje");
+  //  if (seconds % 6 == 0)
+  //  lcd.print(".");
 }
 
 void LCD_PMS7003(PMS::DATA& data) {
@@ -36,6 +38,32 @@ void LCD_PMS7003(PMS::DATA& data) {
   lcd.print("Radno vreme: ");
   int brojSati = radnoVreme() / 60;
   int brojMinuta = radnoVreme() - brojSati * 60;
+  lcd.print(brojSati);
+  lcd.print("s:");
+  lcd.print(brojMinuta);
+  lcd.print("m");
+}
+
+void LCD_Pritisak() {
+  int brojSati = radnoVreme() / 60;
+  int brojMinuta = radnoVreme() - brojSati * 60;
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor (0, 0);
+  lcd.print("Pritisak kom. 1: ");
+  lcd.print(BMP1_pritisak());
+  lcd.print(" mBar");
+  lcd.setCursor (0, 1);
+  lcd.print("Pritisak kom 2: ");
+  lcd.print(BMP2_pritisak());
+  lcd.print(" mBar");
+  lcd.setCursor (0, 2);
+  int vremeServis = 50000 - brojSati;
+  lcd.print("Servis za: ");
+  lcd.print(vremeServis);
+  lcd.print(" h");
+  lcd.setCursor (0, 3);
+  lcd.print("Radno vreme: ");
   lcd.print(brojSati);
   lcd.print("s:");
   lcd.print(brojMinuta);

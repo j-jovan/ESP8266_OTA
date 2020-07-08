@@ -1,15 +1,18 @@
 #define DAC1 25
 
-int snagaMotora[10] = {178, 179, 180, 181, 181, 183, 184, 185, 186, 187};
+int snagaMotora[11] = {1, 178, 179, 180, 181, 181, 183, 184, 185, 186, 187};
 //int pritisakMotora[] = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 10};
 
 void motorDacMap() {
   int val = vratiRazlikuPritiska();
-  val = map(val, 0, 100, 10, 0);
+  val = map(val, 0, 100, 10, 1);
   dacWrite(DAC1, snagaMotora[val]);
+  Serial.println("************************* ");
   Serial.print("Snaga motora je: ");
-  Serial.print(val);
-  Serial.print(" %");
+  Serial.print(val * 10);
+  Serial.println(" %");
+  Serial.println("************************* ");
+
 }
 
 

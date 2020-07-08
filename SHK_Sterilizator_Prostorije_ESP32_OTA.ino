@@ -43,20 +43,29 @@ void loop(void) {
   if (minutes == SDMinutesWrite) {
     upisiNaKarticu();
     SDMinutesWrite++;
-    PMS7003_Setup();
-    LCD_PMS7003(data);
+    //PMS7003_Setup();
+    //LCD_PMS7003(data);
     BMP280_Setup();
   }
 
   // Proveri i postavi snagu motora na svakih 10 sekundi
-  if (seconds % 10 == 0) {
+  if (seconds % 20 == 0) {
     motorDacMap();
   }
-  
+  if (seconds == 30) {
+    //LCD_Pritisak();
+    
+    
+  }
+
   // OTA Handler
   OTAHandleClient();
 
   srednjaVrednostBMP();
+  Serial.print("Pritisak 1 ");
+  Serial.println(BMP1_pritisak());
+  Serial.print("Pritisak 2 ");
+  Serial.println(BMP2_pritisak());
 
   Serial.println(vratiRazlikuPritiska());
   delay(500);
