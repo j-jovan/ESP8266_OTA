@@ -1,8 +1,24 @@
+// Biblioteke
+// https://github.com/esp8266/Arduino/blob/master/libraries/Wire/Wire.h
+// https://github.com/fu-hsi/PMS
+// https://github.com/nhatuan84/esp32-micro-sdcard/blob/master/mySD.h
+// https://github.com/adafruit/Adafruit_Sensor  //mozda ne treba
+// https://github.com/adafruit/Adafruit_BME280_Library
+// https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+
 #include <Wire.h>
 #include "PMS.h"
 #include <mySD.h>
 
 #define PMS_READ_INTERVAL 5
+#define DEBUGG
+#ifdef DEBUGG
+#define DPRINT(x) Serial.print(x)
+#define DPRINTLN(x) Serial.println(x) 
+#elif
+#define DPRINT(x) ;
+#define DPRINTLN(x) ;
+#endif
 
 int relejUV = 19;
 
@@ -15,8 +31,8 @@ void setup(void) {
   OTA_Setup();
   LCD_Start();
   init_SDCard();
-  //ukljuciUV();
-  //BMP280_Setup();
+  ukljuciUV();
+  BMP280_Setup();
 }
 
 void loop(void) {
@@ -26,6 +42,7 @@ void loop(void) {
   static unsigned int SDMinutesWrite = 1;
   static unsigned int PMSMinutesOn = 0;
   static unsigned int PMSMinutesRead = 1;
+
 
   timer(seconds, minutes);
 
@@ -44,33 +61,32 @@ void loop(void) {
   if (minutes == SDMinutesWrite) {
     upisiNaKarticu();
     SDMinutesWrite++;
-    //PMS7003_Setup();
-    //LCD_PMS7003(data);
-    //BMP280_Setup();
+    PMS7003_Setup();
+    LCD_PMS7003(data);
+    BMP280_Setup();
   }
 
   // Proveri i postavi snagu motora na svakih 10 sekundi
   if (seconds % 20 == 0) {
-    //motorDacMap();
+    motorDacMap();
   }
   if (seconds == 30) {
-    //LCD_Pritisak();
-
+    //    LCD_Pritisak();
+    //    BMP280_Setup();
 
   }
 
-  // OTA Handler
   OTAHandleClient();
 
-  //srednjaVrednostBMP();
-  //Serial.print("Pritisak 1 ");
-  //Serial.println(BMP1_pritisak());
-  //Serial.print("Pritisak 2 ");
-  //Serial.println(BMP2_pritisak());
-
-  //Serial.println(vratiRazlikuPritiska());
+  srednjaVrednostBMP();
+  DPRINT("Pritisak 1 ");
+  DPRINTLN(BMP1_pritisak());
+  DPRINT("Pritisak 2 ");
+  DPRINTLN(BMP2_pritisak());
+  DPRINTLN(vratiRazlikuPritiska());
+  
   delay(500);
-  Serial.println("--------------------");
+  DPRINTLN("--------------------");
 
 
 }

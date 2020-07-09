@@ -9,20 +9,20 @@ static unsigned long rVreme;
 
 void init_SDCard() {
   File root;
-  Serial.print("Inicijalizacija SD kartice...");
+  DPRINT("Inicijalizacija SD kartice...");
   if (!SD.begin(SD_CS, SD_MOSI, SD_MISO, SD_SCK)) {
-    Serial.println("neuspesna");
+    DPRINTLN("neuspesna");
     return;
   }
-  Serial.println("uspesna");
+  DPRINTLN("uspesna");
   root = SD.open("/");
   if (!root) {
-    Serial.println("Greska prilikom otvaranja fajla");
+    DPRINTLN("Greska prilikom otvaranja fajla");
     return;
   }
 
   if (!openPMSFile()) {
-    Serial.println("Greska prilikom otvaranja PMS fajla");
+    DPRINTLN("Greska prilikom otvaranja PMS fajla");
     return;
   }
 
@@ -46,7 +46,7 @@ bool openPMSFile()
 
   pmsFile = SD.open(pmsFilename, FILE_WRITE);
   if (!pmsFile) {
-    Serial.println("Greska prilikom otvaranja PMS fajla");
+    DPRINTLN("Greska prilikom otvaranja PMS fajla");
     return false;
   }
 
@@ -66,14 +66,14 @@ void upisiPMSData(PMS::DATA& data)
 
   pmsFile = SD.open(pmsFilename, FILE_WRITE);
   if (!pmsFile) {
-    Serial.println("Greska prilikom upisivanja u PMS file");
+    DPRINTLN("Greska prilikom upisivanja u PMS file");
     return;
   }
 
   pmsFile.print(line);
   pmsFile.flush();
 
-  Serial.println("Uspesno upisivanje u PMS file");
+  DPRINTLN("Uspesno upisivanje u PMS file");
   pmsFile.close();
 }
 
@@ -83,7 +83,7 @@ void upisiNaKarticu() {
 
   fileVreme = SD.open(filename, FILE_WRITE);
   if (!fileVreme) {
-    Serial.println("Greska prilikom upisivanja vremena");
+    DPRINTLN("Greska prilikom upisivanja vremena");
     return;
   }
 
@@ -91,7 +91,7 @@ void upisiNaKarticu() {
   fileVreme.print(rVreme);
   fileVreme.flush();
 
-  Serial.println("Uspesno upisivanje vremena");
+  DPRINTLN("Uspesno upisivanje vremena");
   fileVreme.close();
 }
 
@@ -99,7 +99,7 @@ void procitajFajl() {
   File fileVreme;
   fileVreme = SD.open(filename);
   if (!fileVreme) {
-    Serial.println("Greska prilikom otvaranja fajla vremena");
+    DPRINTLN("Greska prilikom otvaranja fajla vremena");
     return;
   }
 
@@ -107,7 +107,7 @@ void procitajFajl() {
     Serial.write(fileVreme.read());
 
   fileVreme.close();
-  Serial.println(" minuta uradjeno!");
+  DPRINTLN(" minuta uradjeno!");
 }
 
 void printDirectory(File dir, int numTabs) {
@@ -118,15 +118,15 @@ void printDirectory(File dir, int numTabs) {
       break;
     }
     for (uint8_t i = 0; i < numTabs; i++) {
-      Serial.print('\t');
+      DPRINT('\t');
     }
-    Serial.print(entry.name());
+    DPRINT(entry.name());
     if (entry.isDirectory()) {
-      Serial.println("/");
+      DPRINTLN("/");
       printDirectory(entry, numTabs + 1);
     } else {
-      Serial.print("\t\t");
-      Serial.println(entry.size());
+      DPRINT("\t\t");
+      DPRINTLN(entry.size());
     }
     entry.close();
   }
@@ -138,14 +138,14 @@ unsigned long radnoVreme() {
 
   fileVreme = SD.open(filename);
   if (!fileVreme || !fileVreme.available()) {
-    Serial.println("Timer ne radi");
+    DPRINTLN("Timer ne radi");
     return 0;
   }
 
   while (fileVreme.available()) {
     char c = fileVreme.read();
     if (c < '0' || c > '9') {
-      Serial.println("Pogresan format vremena");
+      DPRINTLN("Pogresan format vremena");
       fileVreme.close();
       return 0;
     }
@@ -154,9 +154,9 @@ unsigned long radnoVreme() {
     count += c - '0';
   }
 
-  Serial.print("Radno vreme: ");
-  Serial.print(count);
-  Serial.println(" minuta");
+  DPRINT("Radno vreme: ");
+  DPRINT(count);
+  DPRINTLN(" minuta");
 
   fileVreme.close();
   return count;

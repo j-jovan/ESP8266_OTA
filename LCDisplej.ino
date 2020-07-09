@@ -50,7 +50,7 @@ void LCD_Pritisak() {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-  lcd.print("Pritisak kom. 1: ");
+  lcd.print("Pritisak kom 1: ");
   lcd.print(BMP1_pritisak());
   lcd.print(" mBar");
   lcd.setCursor (0, 1);
@@ -107,6 +107,19 @@ void LCD_Debug(String i, String z) {
   lcd.print("");
   lcd.setCursor (0, 3);
   lcd.print("");
+}
+
+void LCD_Test() {
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor (0, 0);
+  lcd.print("Testtesttest");
+  lcd.setCursor (0, 1);
+  lcd.print("123456789");
+  lcd.setCursor (5, 2);
+  lcd.print("asdfghjkl");
+  lcd.setCursor (0, 3);
+  lcd.print("zxcvbnmmnb");
 }
 
 // Obavestavanje kad se priblizava servis uredjaja

@@ -5,9 +5,9 @@ void timer(unsigned int& seconds, unsigned int& minutes) {
   seconds = timeNow % 60;
   minutes = timeNow / 60;
 
-  Serial.print("Vreme je: ");
-  Serial.print(minutes);
-  Serial.print(" minuta i ");
-  Serial.print(seconds);
-  Serial.println(" sekundi");
+  DPRINT("Vreme je: ");
+  DPRINT(minutes);
+  DPRINT(" minuta i ");
+  DPRINT(seconds);
+  DPRINTLN(" sekundi");
 }
