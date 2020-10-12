@@ -5,12 +5,13 @@
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
-//Ako displej nije povezan, ne radi ostali kod. Treba neki try catch
 void LCD_Setup() {
+  DPRINTLN("LCD_Setup() start");
   Wire.begin(LCD_SDA, LCD_SCL );
 }
 
 void LCD_Start() {
+  DPRINTLN("LCD_Start() start");
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
@@ -26,6 +27,7 @@ void LCD_Start() {
 }
 
 void LCD_PMS7003(PMS::DATA& data) {
+  DPRINTLN("LCD_PMS7003 start");
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
@@ -42,9 +44,12 @@ void LCD_PMS7003(PMS::DATA& data) {
   lcd.print("s:");
   lcd.print(brojMinuta);
   lcd.print("m");
+  DPRINTLN("LCD_PMS7003 kraj");
+
 }
 
 void LCD_Pritisak() {
+  DPRINTLN("LCD_Pritisak() start");
   int brojSati = radnoVreme() / 60;
   int brojMinuta = radnoVreme() - brojSati * 60;
   lcd.begin();
@@ -68,6 +73,7 @@ void LCD_Pritisak() {
   lcd.print("s:");
   lcd.print(brojMinuta);
   lcd.print("m");
+  DPRINTLN("LCD_Pritisak() kraj");
 }
 
 void LCD_Debug(int i) {
@@ -90,19 +96,6 @@ void LCD_Debug(String i) {
   lcd.print(i);
   lcd.setCursor (0, 1);
   lcd.print("");
-  lcd.setCursor (5, 2);
-  lcd.print("");
-  lcd.setCursor (0, 3);
-  lcd.print("");
-}
-
-void LCD_Debug(String i, String z) {
-  lcd.begin();
-  lcd.backlight();
-  lcd.setCursor (0, 0);
-  lcd.print(i);
-  lcd.setCursor (0, 1);
-  lcd.print(z);
   lcd.setCursor (5, 2);
   lcd.print("");
   lcd.setCursor (0, 3);

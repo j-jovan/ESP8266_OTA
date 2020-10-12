@@ -1,21 +1,40 @@
-// Biblioteke
-// https://github.com/esp8266/Arduino/blob/master/libraries/Wire/Wire.h
-// https://github.com/fu-hsi/PMS
-// https://github.com/nhatuan84/esp32-micro-sdcard/blob/master/mySD.h
-// https://github.com/adafruit/Adafruit_Sensor  //mozda ne treba
-// https://github.com/adafruit/Adafruit_BME280_Library
-// https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+/*
+    Srbija Hakuje Koronu
+    Sterilizator Prostorije
+
+    Kod napisan za potrebe Sterilizatora prostorije koji je razvijen na Srbija Hakuje Koronu Hakatonu
+    Beograd, Jun 2020
+
+    Koriscene komponente:
+    ESP32 DevKit V1
+    BMP280 3.3v x2
+    LCD Display 20x4
+    PMS 7003 Particle Sensor
+    MicroSD Card Reader
+    Motor CBM/2-146/180 - 380W (1090m3/H, 2000 RPM)
+    UV Sijalice Germicidne x6
+    Razna sitna elektronika i plasticni delovi
+
+    Koriscene biblioteke:
+    https://github.com/fu-hsi/PMS
+    https://github.com/nhatuan84/esp32-micro-sdcard/blob/master/mySD.h
+    https://github.com/adafruit/Adafruit_Sensor
+    https://github.com/adafruit/Adafruit_BME280_Library
+    https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+
+*/
 
 #include <Wire.h>
 #include "PMS.h"
 #include <mySD.h>
 
 #define PMS_READ_INTERVAL 5
+
 #define DEBUGG
 #ifdef DEBUGG
-#define DPRINT(x) Serial.print(x)
-#define DPRINTLN(x) Serial.println(x) 
-#elif
+//#define DPRINT(x) Serial.print(x)      //Uncomment to enable debugging
+//#define DPRINTLN(x) Serial.println(x)  //Uncomment to enable debugging
+//#elif
 #define DPRINT(x) ;
 #define DPRINTLN(x) ;
 #endif
@@ -70,11 +89,6 @@ void loop(void) {
   if (seconds % 20 == 0) {
     motorDacMap();
   }
-  if (seconds == 30) {
-    //    LCD_Pritisak();
-    //    BMP280_Setup();
-
-  }
 
   OTAHandleClient();
 
@@ -84,7 +98,7 @@ void loop(void) {
   DPRINT("Pritisak 2 ");
   DPRINTLN(BMP2_pritisak());
   DPRINTLN(vratiRazlikuPritiska());
-  
+
   delay(500);
   DPRINTLN("--------------------");
 

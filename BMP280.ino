@@ -1,11 +1,10 @@
-//#include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 
-//Senzor 1
+// Senzor 1
 #define BMP280_1_I2C_SDA 21
 #define BMP280_1_I2C_SCL 22
 
-//Senzor 2
+// Senzor 2
 #define BMP280_2_I2C_SDA 5
 #define BMP280_2_I2C_SCL 18
 
@@ -21,7 +20,7 @@ unsigned long delayTime;
 
 void BMP280_Setup() {
   Serial.begin(115200);
-  DPRINTLN(F("BME280 test"));
+  DPRINTLN(F("BME280_Setup start"));
   I2CBME1.begin(BMP280_1_I2C_SDA, BMP280_1_I2C_SCL, 100000);
   I2CBME2.begin(BMP280_2_I2C_SDA, BMP280_2_I2C_SCL, 100000);
 
@@ -43,7 +42,8 @@ void BMP280_Setup() {
   DPRINTLN("Oba senzora uspesno povezana");
   delayTime = 100;
 
-  DPRINTLN();
+  DPRINTLN("BMP280 kraj");
+  DPRINTLN("------------------");
 }
 void BMP280_Loop() {
   BMP1_sve_vrednosti();
@@ -52,6 +52,7 @@ void BMP280_Loop() {
 }
 
 void BMP1_sve_vrednosti() {
+  DPRINT("BMP1_sve_vrednosti start");
   DPRINT("Temperatura = ");
   DPRINT(bme1.readTemperature());
   DPRINTLN(" *C");
@@ -67,11 +68,12 @@ void BMP1_sve_vrednosti() {
   DPRINT("Vlaznost vazduha = ");
   DPRINT(bme1.readHumidity());
   DPRINTLN(" %");
-
-  DPRINTLN();
+  DPRINT("BMP1_sve_vrednosti kraj");
+  DPRINTLN("------------------");
 }
 
 void BMP2_sve_vrednosti() {
+  DPRINT("BMP2_sve_vrednosti start");
   DPRINT("Temperatura = ");
   DPRINT(bme2.readTemperature());
   DPRINTLN(" *C");
@@ -87,21 +89,21 @@ void BMP2_sve_vrednosti() {
   DPRINT("Vlaznost vazduha = ");
   DPRINT(bme2.readHumidity());
   DPRINTLN(" %");
-
+  DPRINT("BMP2_sve_vrednosti kraj");
   DPRINTLN("--------------------");
 }
 
 float BMP1_pritisak() {
-  //  DPRINT("Pritisak = ");
-  //  DPRINT(bme1.readPressure() / 100.0F);
-  //  DPRINTLN(" hPa");
+  DPRINT("Pritisak = ");
+  DPRINT(bme1.readPressure() / 100.0F);
+  DPRINTLN(" hPa");
   return bme1.readPressure() / 100.0F;
 }
 
 float BMP2_pritisak() {
-  //  DPRINT("Pritisak = ");
-  //  DPRINT(bme2.readPressure() / 100.0F);
-  //  DPRINTLN(" hPa");
+  DPRINT("Pritisak = ");
+  DPRINT(bme2.readPressure() / 100.0F);
+  DPRINTLN(" hPa");
   return bme2.readPressure() / 100.0F;
 }
 
@@ -133,5 +135,6 @@ void srednjaVrednostBMP() {
 }
 
 float vratiRazlikuPritiska() {
+  DPRINTLN(abs(BMP1_pritisak() - BMP2_pritisak()));
   return abs(BMP1_pritisak() - BMP2_pritisak());
 }
