@@ -1,4 +1,5 @@
 #define DAC1 25
+int serialRead;
 
 int snagaMotora[11] = {1, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187};  // Rucno izracunate vrednosti
 
@@ -14,7 +15,28 @@ void motorDacMap() {
   DPRINTLN("************************* ");
 }
 
-void motorDacTest() {
+
+void motorDacTestManual() {
+  if (Serial.available() > 0) {
+    int serialRead = Serial.parseInt();
+    DPRINTLN("---");
+    DPRINTLN("Unesi vrednost.");
+
+    if (serialRead == 0) {
+      // Nakon sto Serial.available procita i ispise vrednost
+      // Uvek stavi da je vrednost open 0
+    }
+    else {
+      DPRINT("Uneta vrednost je: ");
+      DPRINTLN(serialRead);
+      dacWrite(DAC1, serialRead);
+      DPRINTLN("***");
+    }
+  }
+}
+
+
+void motorDacTestAuto() {
   int value = 255; // 255 = 3.3V / 128 = 1.65V
   dacWrite(DAC1, value);
   delay(1000);
