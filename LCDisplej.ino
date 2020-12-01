@@ -5,11 +5,13 @@
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
+// Pokretanje I2C
 void LCD_Setup() {
   DPRINTLN("LCD_Setup() start");
   Wire.begin(LCD_SDA, LCD_SCL );
 }
 
+// Pokretanje LCD-a i pozdravna poruka
 void LCD_Start() {
   DPRINTLN("LCD_Start() start");
   lcd.begin();
@@ -22,10 +24,9 @@ void LCD_Start() {
   lcd.print("Prostorije");
   lcd.setCursor (0, 3);
   lcd.print("Pokretanje");
-  //  if (seconds % 6 == 0)
-  //  lcd.print(".");
 }
 
+// Prikazi na LCD podatke sa PMS7003 i ukupan broj radnih sati uredjaja
 void LCD_PMS7003(PMS::DATA& data) {
   DPRINTLN("LCD_PMS7003 start");
   lcd.begin();
@@ -48,34 +49,51 @@ void LCD_PMS7003(PMS::DATA& data) {
 
 }
 
-void LCD_Pritisak() {
-  DPRINTLN("LCD_Pritisak() start");
-  int brojSati = radnoVreme() / 60;
-  int brojMinuta = radnoVreme() - brojSati * 60;
+// Prikazi na LCD pritisak u komorama uređaja, vreme do servisa i radno vreme
+// Ne radi
+// void LCD_Pritisak() {
+//   DPRINTLN("LCD_Pritisak() start");
+//   int brojSati = radnoVreme() / 60;
+//   int brojMinuta = radnoVreme() - brojSati * 60;
+//   lcd.begin();
+//   lcd.backlight();
+//   lcd.setCursor (0, 0);
+//   lcd.print("Pritisak kom 1: ");
+//   lcd.print(BMP1_pritisak());
+//   lcd.print(" mBar");
+//   lcd.setCursor (0, 1);
+//   lcd.print("Pritisak kom 2: ");
+//   lcd.print(BMP2_pritisak());
+//   lcd.print(" mBar");
+//   lcd.setCursor (0, 2);
+//   int vremeServis = 50000 - brojSati;
+//   lcd.print("Servis za: ");
+//   lcd.print(vremeServis);
+//   lcd.print(" h");
+//   lcd.setCursor (0, 3);
+//   lcd.print("Radno vreme: ");
+//   lcd.print(brojSati);
+//   lcd.print("s:");
+//   lcd.print(brojMinuta);
+//   lcd.print("m");
+//   DPRINTLN("LCD_Pritisak() kraj");
+// }
+
+
+// Set debug statementa 
+// Prima kao parametre null, int i String
+void LCD_Debug() {
   lcd.begin();
   lcd.backlight();
   lcd.setCursor (0, 0);
-  lcd.print("Pritisak kom 1: ");
-  lcd.print(BMP1_pritisak());
-  lcd.print(" mBar");
+  lcd.print("");
   lcd.setCursor (0, 1);
-  lcd.print("Pritisak kom 2: ");
-  lcd.print(BMP2_pritisak());
-  lcd.print(" mBar");
-  lcd.setCursor (0, 2);
-  int vremeServis = 50000 - brojSati;
-  lcd.print("Servis za: ");
-  lcd.print(vremeServis);
-  lcd.print(" h");
+  lcd.print("123456789");
+  lcd.setCursor (5, 2);
+  lcd.print("asdfghjkl");
   lcd.setCursor (0, 3);
-  lcd.print("Radno vreme: ");
-  lcd.print(brojSati);
-  lcd.print("s:");
-  lcd.print(brojMinuta);
-  lcd.print("m");
-  DPRINTLN("LCD_Pritisak() kraj");
+  lcd.print("zxcvbnmmnb");
 }
-
 void LCD_Debug(int i) {
   lcd.begin();
   lcd.backlight();
@@ -88,7 +106,6 @@ void LCD_Debug(int i) {
   lcd.setCursor (0, 3);
   lcd.print("");
 }
-
 void LCD_Debug(String i) {
   lcd.begin();
   lcd.backlight();
@@ -102,20 +119,8 @@ void LCD_Debug(String i) {
   lcd.print("");
 }
 
-void LCD_Test() {
-  lcd.begin();
-  lcd.backlight();
-  lcd.setCursor (0, 0);
-  lcd.print("Testtesttest");
-  lcd.setCursor (0, 1);
-  lcd.print("123456789");
-  lcd.setCursor (5, 2);
-  lcd.print("asdfghjkl");
-  lcd.setCursor (0, 3);
-  lcd.print("zxcvbnmmnb");
-}
-
 // Obavestavanje kad se priblizava servis uredjaja
+// Ne radi
 //void LCD_Upozorenje(int x) {
 //  lcd.begin();
 //  lcd.backlight();

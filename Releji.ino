@@ -1,3 +1,5 @@
+// Ukljucivanje / iskljucivanje UV lampi koje sterilisu komore
+
 void ukljuciUV() {
   digitalWrite(relejUV, HIGH);
   delay(10);

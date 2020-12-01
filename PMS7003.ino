@@ -1,6 +1,9 @@
 #define RXD2 39
 #define TXD2 34
 
+// Citajuci neku dokumentaciju senzora dosli smo (neko je dosao) do podatka 
+// da mu odgovara da proverava podatke na svakih 10-15 minuta.
+
 HardwareSerial SerialPMS(1);
 PMS pms(SerialPMS);
 

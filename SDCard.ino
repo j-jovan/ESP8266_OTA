@@ -3,6 +3,10 @@
 #define SD_MOSI 27
 #define SD_CS 12
 
+// Na SD kartici se kreira fajl vreme.txt u koji se upisuje 
+// koliko dugo je uredjaj radio na svakih x minuta za odokativno pracenje koriscenja uredjaja.
+// Povrh toga, upisuju se i podaci sa PMS7003 senzora cestica kako bismo mogli da pratimo funkcionalnost uredjaja.
+
 static char pmsFilename[128];
 static const char* filename = "vreme.txt";
 static unsigned long rVreme;
@@ -93,7 +97,7 @@ void procitajFajl() {
   File fileVreme;
   fileVreme = SD.open(filename);
   if (!fileVreme) {
-    DPRINTLN("Greska prilikom otvaranja fajla vremena");
+    DPRINTLN("Greska prilikom otvaranja vreme.txt");
     return;
   }
 

@@ -3,11 +3,12 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
+// Uredjaj se povezuje na Wi-Fi sa kredencijalima ispod
+// Uredjaj je trebao da se ponasa kao ruter neko vreme i da
+// iskljuci Wi-Fi ukoliko se klijent ne zakaci, ali to nismo jos resili
+
 //const char* ssid = "polyhedralab";
 //const char* password = "polyhedra3d";
-//
-//const char* ssid = "BITF";
-//const char* password = "BITFfirme";
 
 const char* ssid = "Zmaj i Ala";
 const char* password = "88888888";

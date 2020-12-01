@@ -2,18 +2,9 @@
     Srbija Hakuje Koronu
     Sterilizator Prostorije
 
-    Kod napisan za potrebe Sterilizatora prostorije koji je razvijen na Srbija Hakuje Koronu Hakatonu
+    Kod napisan za potrebe Sterilizatora prostorije
+    Razvijen na "Srbija Hakuje Koronu" Hakatonu
     Beograd, Jun 2020
-
-    Koriscene komponente:
-    ESP32 DevKit V1
-    BMP280 3.3v x2
-    LCD Display 20x4
-    PMS 7003 Particle Sensor
-    MicroSD Card Reader
-    Motor CBM/2-146/180 - 380W (1090m3/H, 2000 RPM)
-    UV Sijalice Germicidne x6
-    Razna sitna elektronika i plasticni delovi
 
     Koriscene biblioteke:
     https://github.com/fu-hsi/PMS
@@ -21,6 +12,35 @@
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/Adafruit_BME280_Library
     https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+    
+    Koriscene elektronske komponente:
+    1. ESP32 DevKit V1
+    2. BMP280 3.3v x2
+    3. LCD Display 20x4
+    4. PMS 7003 Particle Sensor
+    5. MicroSD Card Reader i microSD kartica (256mb minimum)
+    6. Motor CBM/2-146/180 - 380W (1090m3/H, 2000 RPM)
+    7. UV Sijalice (Germicidne) x6
+    8. Razna sitna elektronika i plasticni delovi
+
+    Dodatne komponente:
+    9. HEPA filter
+    10. Predfilter x2 (Predfilteri upijaju krupnije cestice kako bi HEPA trajao duze)
+
+    Opis uredjaja:
+    Uredjaj je podeljen na dve komore (gornju i donju) pomocu dva predfiltera (10) i HEPA filtera (9).
+    Vazduh ulazi kroz resetku na gornjoj komori, prolazi kroz dva predfiltera (10) i onda ga UV (7) sterilise.
+    Nakon toga prolazi kroz HEPA filter (9), pa sledi jos jedna sterilizaciju UV (7) lampama pre napustanja uredjaja.
+    U donjoj komori uredjaja se nalazi motor (6) koji uvlaci provlaci vazduh kroz ceo uredjaj.
+
+    Info:
+    Prvobitni plan je bio da koristimo cip iz Arduino Uno ili Arduino Pro Mini/Nano, ali nije bilo dovoljno memorije za kod, te smo uzeli ESP32
+    LCD Displej prikazuje podatke iz uredjaja korisnicima
+    Podaci iz senzora cestica se cuvaju u micoSD kartici, kao i radno vreme uredjaja
+    Senzor pritiska prati pritisak u dve komore i obavestava korisnika ukoliko je razlika prevelika, jer to znaci da je vreme za zamenu filtera.
+    Radni vek UV lampi je 50.000 sati.
+
+
 
 */
 

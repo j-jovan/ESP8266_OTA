@@ -1,7 +1,12 @@
 #define DAC1 25
 int serialRead;
 
-int snagaMotora[11] = {1, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187};  // Rucno izracunate vrednosti
+// Motor je podesen da prati razliku pritiska u komorama
+// I da smanjuje snagu sa porastom razlike pritiska
+// Snaga motora je regulisana pomocu diaka/triaka kojim upravljaju LE dioda i fotootpornik.
+
+// Rucno izracunate vrednosti
+int snagaMotora[11] = {1, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187};  
 
 void motorDacMap() {
   int val = vratiRazlikuPritiska();
@@ -16,6 +21,7 @@ void motorDacMap() {
 }
 
 
+// Rucna provera rada motora
 void motorDacTestManual() {
   if (Serial.available() > 0) {
     int serialRead = Serial.parseInt();
@@ -34,7 +40,6 @@ void motorDacTestManual() {
     }
   }
 }
-
 
 void motorDacTestAuto() {
   int value = 255; // 255 = 3.3V / 128 = 1.65V
