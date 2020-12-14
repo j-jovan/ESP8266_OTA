@@ -52,7 +52,7 @@
 #include "PMS.h"
 #include <mySD.h>
 
-#define PMS_READ_INTERVAL 5
+#define PMS_READ_INTERVAL 1
 
 #define DEBUGG
 #ifdef DEBUGG
@@ -70,13 +70,13 @@ bool ukljuciUredjaj = false;
 void setup(void) {
   // https://9gag.com/gag/a9nbgyW
   Serial.begin(115200);
-  //  pinMode(relejUV, OUTPUT);
+  pinMode(relejUV, OUTPUT);
   pinMode(prekidac, INPUT);
   LCD_Setup();
   PMS7003_Setup();
   OTA_Setup();
   LCD_SHK_Message();
-  //init_SDCard();
+  init_SDCard();
   ukljuciUV();
   //  BMP280_Setup();
 }
@@ -92,49 +92,34 @@ void loop(void) {
   timer(seconds, minutes);
 
 
-  if (digitalRead(prekidac)) {
-    ukljuciUredjaj == true;
-    DPRINTLN("Uredjaj ukljucen");
 
-
-
-    if (minutes == PMSMinutesOn) {
-      PMS7003WakeUp();
-      PMSMinutesOn += PMS_READ_INTERVAL;
-    }
-    if (minutes == PMSMinutesRead) {
-      PMS7003ReadData(data);
-      PMS7003Sleep();
-      LCD_PMS7003(data);
-      upisiPMSData(data);
-      PMSMinutesRead += PMS_READ_INTERVAL;
-    }
-
-    if (minutes == SDMinutesWrite) {
-      upisiNaKarticu();
-      SDMinutesWrite++;
-      PMS7003_Setup();
-      LCD_PMS7003(data);
-      //BMP280_Setup();
-    }
-
-    // Proveri i postavi snagu motora na svakih 10 sekundi
-    //    if (seconds % 20 == 0) {
-    //      motorDacMap();
-    //    }
-
-    OTAHandleClient();
+  if (minutes == PMSMinutesOn) {
+    PMS7003WakeUp();
+    PMSMinutesOn += PMS_READ_INTERVAL;
   }
-  else {
-    ukljuciUredjaj == false;
-    DPRINTLN("Uredjaj iskljucen");
-    LCD_Clear();
+  if (minutes == PMSMinutesRead) {
+    PMS7003ReadData(data);
+    PMS7003Sleep();
+    LCD_PMS7003(data);
+    upisiPMSData(data);
+    PMSMinutesRead += PMS_READ_INTERVAL;
   }
 
+  if (minutes == SDMinutesWrite) {
+    upisiNaKarticu();
+    SDMinutesWrite++;
+    PMS7003_Setup();
+    LCD_PMS7003(data);
+    //BMP280_Setup();
+  }
 
+  // Proveri i postavi snagu motora na svakih 10 sekundi
+  //    if (seconds % 20 == 0) {
+  //      motorDacMap();
+  //    }
 
+  OTAHandleClient();
 
   delay(500);
   DPRINTLN("--------------------");
 }
-// Debugging deo

@@ -3,7 +3,7 @@
 #define SD_MOSI 27
 #define SD_CS 12
 
-// Na SD kartici se kreira fajl vreme.txt u koji se upisuje 
+// Na SD kartici se kreira fajl vreme.txt u koji se upisuje
 // koliko dugo je uredjaj radio na svakih x minuta za odokativno pracenje koriscenja uredjaja.
 // Povrh toga, upisuju se i podaci sa PMS7003 senzora cestica kako bismo mogli da pratimo funkcionalnost uredjaja.
 
@@ -12,7 +12,7 @@ static const char* filename = "vreme.txt";
 static unsigned long rVreme;
 
 void init_SDCard() {
-  DPRINT("init_SDCard() start");
+  DPRINTLN("&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
   File root;
   DPRINT("Inicijalizacija SD kartice...");
   if (!SD.begin(SD_CS, SD_MOSI, SD_MISO, SD_SCK)) {
@@ -32,8 +32,7 @@ void init_SDCard() {
   printDirectory(root, 0);
   root.close();
   rVreme = radnoVreme();
-  DPRINT("init_SDCard() end");
-  DPRINT("-------------------------------");
+  DPRINTLN("&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 }
 bool openPMSFile() {
   DPRINT("openPMSFile() start");
@@ -60,7 +59,7 @@ bool openPMSFile() {
   return true;
 }
 void upisiPMSData(PMS::DATA& data) {
-  DPRINT("upisiPMSData(PMS::DATA& data) start");
+  DPRINTLN("&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
   File pmsFile;
   String line = String(data.PM_AE_UG_1_0) + "," + String(data.PM_AE_UG_2_5) + "," + String(data.PM_AE_UG_10_0) + "\n";
@@ -72,7 +71,7 @@ void upisiPMSData(PMS::DATA& data) {
   pmsFile.print(line);
   pmsFile.flush();
   DPRINTLN("Uspesno upisivanje u PMS file");
-  DPRINTLN("upisiPMSData(PMS::DATA& data) end");
+  DPRINTLN("&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
   pmsFile.close();
 }

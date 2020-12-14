@@ -22,8 +22,12 @@ void LCD_SHK_Message() {
   lcd.print("Sterilizator");
   lcd.setCursor (5, 2);
   lcd.print("Prostorije");
-  lcd.setCursor (0, 3);
+  lcd.setCursor (5, 3);
   lcd.print("Pokretanje");
+  delay(10000);
+  lcd.setCursor (0, 0);
+  lcd.print("Podaci za 50 sekundi");
+
 }
 
 // Prikazi na LCD podatke sa PMS7003 i ukupan broj radnih sati uredjaja
