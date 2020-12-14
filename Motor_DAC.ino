@@ -6,7 +6,7 @@ int serialRead;
 // Snaga motora je regulisana pomocu diaka/triaka kojim upravljaju LE dioda i fotootpornik.
 
 // Rucno izracunate vrednosti
-int snagaMotora[11] = {1, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187};  
+int snagaMotora[11] = {1, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187};
 
 void motorDacMap() {
   int val = vratiRazlikuPritiska();

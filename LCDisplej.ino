@@ -12,7 +12,7 @@ void LCD_Setup() {
 }
 
 // Pokretanje LCD-a i pozdravna poruka
-void LCD_Start() {
+void LCD_SHK_Message() {
   DPRINTLN("LCD_Start() start");
   lcd.begin();
   lcd.backlight();
@@ -80,7 +80,7 @@ void LCD_PMS7003(PMS::DATA& data) {
 // }
 
 
-// Set debug statementa 
+// Set debug statementa
 // Prima kao parametre null, int i String
 void LCD_Debug() {
   lcd.begin();
@@ -100,11 +100,11 @@ void LCD_Debug(int i) {
   lcd.setCursor (0, 0);
   lcd.print(i);
   lcd.setCursor (0, 1);
-  lcd.print("");
-  lcd.setCursor (5, 2);
-  lcd.print("");
+  lcd.print(i);
+  lcd.setCursor (0, 2);
+  lcd.print(i);
   lcd.setCursor (0, 3);
-  lcd.print("");
+  lcd.print(i);
 }
 void LCD_Debug(String i) {
   lcd.begin();
@@ -112,11 +112,50 @@ void LCD_Debug(String i) {
   lcd.setCursor (0, 0);
   lcd.print(i);
   lcd.setCursor (0, 1);
-  lcd.print("");
-  lcd.setCursor (5, 2);
-  lcd.print("");
+  lcd.print(i);
+  lcd.setCursor (0, 2);
+  lcd.print(i);
+  lcd.setCursor (0, 3);
+  lcd.print(i);
+}
+
+void LCD_Test() {
+  int column = 0;
+  int row = 0;
+
+  lcd.begin();
+  lcd.backlight();
+  for (row = 0; row <= 3; row++) {
+    for (column = 0; column <= 19; column++) {
+      lcd.setCursor (column, row);
+      lcd.print("*");
+      delay(100);
+      lcd.clear();
+    }
+  }
+}
+
+void LCD_Clear() {
+  lcd.begin();
+  lcd.noBacklight();
+  lcd.clear();
+}
+
+void LCD_Shutdown() {
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor (0, 0);
+  lcd.print("    Sterilizator");
+  lcd.setCursor (0, 1);
+  lcd.print("         se");
+  lcd.setCursor (0, 2);
+  lcd.print("     iskljucuje");
   lcd.setCursor (0, 3);
   lcd.print("");
+  delay(10000);
+  lcd.noBacklight();
+  lcd.clear();
+
 }
 
 // Obavestavanje kad se priblizava servis uredjaja

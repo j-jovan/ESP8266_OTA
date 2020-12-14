@@ -6,13 +6,17 @@
     Razvijen na "Srbija Hakuje Koronu" Hakatonu
     Beograd, Jun 2020
 
+    ESP board link:
+    https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+
     Koriscene biblioteke:
     https://github.com/fu-hsi/PMS
-    https://github.com/nhatuan84/esp32-micro-sdcard/blob/master/mySD.h
+    https://github.com/nhatuan84/esp32-micro-sdcard
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/Adafruit_BME280_Library
     https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
-    
+
     Koriscene elektronske komponente:
     1. ESP32 DevKit V1
     2. BMP280 3.3v x2
@@ -52,75 +56,85 @@
 
 #define DEBUGG
 #ifdef DEBUGG
-//#define DPRINT(x) Serial.print(x)      //Uncomment to enable debugging
-//#define DPRINTLN(x) Serial.println(x)  //Uncomment to enable debugging
-//#elif
+#define DPRINT(x) Serial.print(x)      //Uncomment to enable debugging
+#define DPRINTLN(x) Serial.println(x)  //Uncomment to enable debugging
+#elif
 #define DPRINT(x) ;
 #define DPRINTLN(x) ;
 #endif
 
 int relejUV = 19;
+int prekidac = 33;
+bool ukljuciUredjaj = false;
 
 void setup(void) {
   // https://9gag.com/gag/a9nbgyW
   Serial.begin(115200);
-  pinMode(relejUV, OUTPUT);
+  //  pinMode(relejUV, OUTPUT);
+  pinMode(prekidac, INPUT);
   LCD_Setup();
   PMS7003_Setup();
   OTA_Setup();
-  LCD_Start();
-  init_SDCard();
+  LCD_SHK_Message();
+  //init_SDCard();
   ukljuciUV();
-  BMP280_Setup();
+  //  BMP280_Setup();
 }
 
 void loop(void) {
+
   PMS::DATA data;
   unsigned int seconds;
   unsigned int minutes;
   static unsigned int SDMinutesWrite = 1;
   static unsigned int PMSMinutesOn = 0;
   static unsigned int PMSMinutesRead = 1;
-
-
   timer(seconds, minutes);
 
-  if (minutes == PMSMinutesOn) {
-    PMS7003WakeUp();
-    PMSMinutesOn += PMS_READ_INTERVAL;
+
+  if (digitalRead(prekidac)) {
+    ukljuciUredjaj == true;
+    DPRINTLN("Uredjaj ukljucen");
+
+
+
+    if (minutes == PMSMinutesOn) {
+      PMS7003WakeUp();
+      PMSMinutesOn += PMS_READ_INTERVAL;
+    }
+    if (minutes == PMSMinutesRead) {
+      PMS7003ReadData(data);
+      PMS7003Sleep();
+      LCD_PMS7003(data);
+      upisiPMSData(data);
+      PMSMinutesRead += PMS_READ_INTERVAL;
+    }
+
+    if (minutes == SDMinutesWrite) {
+      upisiNaKarticu();
+      SDMinutesWrite++;
+      PMS7003_Setup();
+      LCD_PMS7003(data);
+      //BMP280_Setup();
+    }
+
+    // Proveri i postavi snagu motora na svakih 10 sekundi
+    //    if (seconds % 20 == 0) {
+    //      motorDacMap();
+    //    }
+
+    OTAHandleClient();
   }
-  if (minutes == PMSMinutesRead) {
-    PMS7003ReadData(data);
-    PMS7003Sleep();
-    LCD_PMS7003(data);
-    upisiPMSData(data);
-    PMSMinutesRead += PMS_READ_INTERVAL;
+  else {
+    ukljuciUredjaj == false;
+    DPRINTLN("Uredjaj iskljucen");
+    LCD_Clear();
   }
 
-  if (minutes == SDMinutesWrite) {
-    upisiNaKarticu();
-    SDMinutesWrite++;
-    PMS7003_Setup();
-    LCD_PMS7003(data);
-    BMP280_Setup();
-  }
 
-  // Proveri i postavi snagu motora na svakih 10 sekundi
-  if (seconds % 20 == 0) {
-    motorDacMap();
-  }
 
-  OTAHandleClient();
-
-  srednjaVrednostBMP();
-  DPRINT("Pritisak 1 ");
-  DPRINTLN(BMP1_pritisak());
-  DPRINT("Pritisak 2 ");
-  DPRINTLN(BMP2_pritisak());
-  DPRINTLN(vratiRazlikuPritiska());
 
   delay(500);
   DPRINTLN("--------------------");
-
-
 }
+// Debugging deo
