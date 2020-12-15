@@ -78,7 +78,7 @@ void setup(void) {
   LCD_SHK_Message();
   init_SDCard();
   ukljuciUV();
-  //  BMP280_Setup();
+  BMP280_Setup();
 }
 
 void loop(void) {
@@ -113,8 +113,8 @@ void loop(void) {
     //BMP280_Setup();
   }
 
-  // Proveri i postavi snagu motora na svakih 10 sekundi
-  //    if (seconds % 20 == 0) {
+  // Proveri i postavi snagu motora na svakih 30 sekundi
+  //    if (seconds % 30 == 0) {
   //      motorDacMap();
   //    }
 
