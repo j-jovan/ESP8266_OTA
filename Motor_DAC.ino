@@ -10,11 +10,11 @@ int snagaMotora[7] = {1, 153, 154, 155, 156, 158, 200};
 
 void motorDacMap() {
   int val = vratiRazlikuPritiska();
-  val = map(val, 0, 30, 7, 1);  // Ako razlika 0, snaga motora 7, ako razlika
+  val = map(val, 0, 30, 6, 1);  // Ako razlika 0, snaga motora 7, ako razlika
   dacWrite(DAC1, snagaMotora[val]);
 
   DPRINTLN("************************* ");
-  DPRINT("Snaga motora je: ");
+  DPRINTLN("Snaga motora je: ");
   DPRINT(val);
   DPRINTLN("************************* ");
 }

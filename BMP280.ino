@@ -52,7 +52,6 @@ void BMP280_Loop() {
 }
 
 void BMP1_sve_vrednosti() {
-  DPRINT("BMP1_sve_vrednosti start");
   DPRINT("Temperatura = ");
   DPRINT(bme1.readTemperature());
   DPRINTLN(" *C");
@@ -68,12 +67,10 @@ void BMP1_sve_vrednosti() {
   DPRINT("Vlaznost vazduha = ");
   DPRINT(bme1.readHumidity());
   DPRINTLN(" %");
-  DPRINT("BMP1_sve_vrednosti kraj");
   DPRINTLN("------------------");
 }
 
 void BMP2_sve_vrednosti() {
-  DPRINT("BMP2_sve_vrednosti start");
   DPRINT("Temperatura = ");
   DPRINT(bme2.readTemperature());
   DPRINTLN(" *C");
@@ -89,7 +86,6 @@ void BMP2_sve_vrednosti() {
   DPRINT("Vlaznost vazduha = ");
   DPRINT(bme2.readHumidity());
   DPRINTLN(" %");
-  DPRINT("BMP2_sve_vrednosti kraj");
   DPRINTLN("--------------------");
 }
 
@@ -124,7 +120,7 @@ void srednjaVrednostBMP() {
     DPRINTLN(pritisak1 / brojUzoraka);
     DPRINT("Srednja vrednost drugog senzora: ");
     DPRINTLN(pritisak2 / brojUzoraka);
-    DPRINT("Razlika pritisaka je: ");
+    DPRINT("Razlika pritiska je: ");
     DPRINTLN(razlikaPritiska);
     DPRINTLN("--------------------");
     pritisakCounter = 0;

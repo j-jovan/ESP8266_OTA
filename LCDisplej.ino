@@ -50,7 +50,14 @@ void LCD_PMS7003(PMS::DATA& data) {
   lcd.print(brojMinuta);
   lcd.print("m");
   DPRINTLN("LCD_PMS7003 kraj");
+}
 
+void LCD_Filteri() {
+  DPRINTLN("LCD_Filteri() start");
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor (0, 0);
+  lcd.print("Zaprljani filteri");
 }
 
 // Prikazi na LCD pritisak u komorama uređaja, vreme do servisa i radno vreme

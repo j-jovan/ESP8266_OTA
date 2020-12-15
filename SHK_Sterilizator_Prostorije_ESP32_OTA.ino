@@ -52,13 +52,13 @@
 #include "PMS.h"
 #include <mySD.h>
 
-#define PMS_READ_INTERVAL 1
+#define PMS_READ_INTERVAL 3
 
 #define DEBUGG
 #ifdef DEBUGG
-#define DPRINT(x) Serial.print(x)      //Uncomment to enable debugging
-#define DPRINTLN(x) Serial.println(x)  //Uncomment to enable debugging
-#elif
+// #define DPRINT(x) Serial.print(x)      //Uncomment to enable debugging
+// #define DPRINTLN(x) Serial.println(x)  //Uncomment to enable debugging
+// #elif
 #define DPRINT(x) ;
 #define DPRINTLN(x) ;
 #endif
@@ -89,6 +89,7 @@ void loop(void) {
   static unsigned int SDMinutesWrite = 1;
   static unsigned int PMSMinutesOn = 0;
   static unsigned int PMSMinutesRead = 1;
+  static unsigned int PressureMinutesRead = 1;
   timer(seconds, minutes);
 
 
@@ -110,16 +111,24 @@ void loop(void) {
     SDMinutesWrite++;
     PMS7003_Setup();
     LCD_PMS7003(data);
-    //BMP280_Setup();
+    BMP280_Setup();
   }
 
-  // Proveri i postavi snagu motora na svakih 30 sekundi
-  //    if (seconds % 30 == 0) {
-  //      motorDacMap();
-  //    }
+  //Proveri i postavi snagu motora na svakih 30 sekundi
+  if (seconds % 30 == 0) {
+    motorDacMap();
+  }
 
   OTAHandleClient();
 
+  // BMP280_Loop();
+  DPRINTLN("Razlika pritiska je: ");
+  DPRINTLN(vratiRazlikuPritiska());
+  if (minutes == PressureMinutesRead) {
+    if (vratiRazlikuPritiska() > 10) {
+      LCD_Filteri();
+    }
+  }
   delay(500);
   DPRINTLN("--------------------");
 }
